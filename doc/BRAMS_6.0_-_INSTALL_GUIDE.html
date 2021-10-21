@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BRAMS 6.0 - MANUAL</title>
+  <style>
+  @font-face {
+  font-family: octicons-link;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAZwABAAAAAACFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEU0lHAAAGaAAAAAgAAAAIAAAAAUdTVUIAAAZcAAAACgAAAAoAAQAAT1MvMgAAAyQAAABJAAAAYFYEU3RjbWFwAAADcAAAAEUAAACAAJThvmN2dCAAAATkAAAABAAAAAQAAAAAZnBnbQAAA7gAAACyAAABCUM+8IhnYXNwAAAGTAAAABAAAAAQABoAI2dseWYAAAFsAAABPAAAAZwcEq9taGVhZAAAAsgAAAA0AAAANgh4a91oaGVhAAADCAAAABoAAAAkCA8DRGhtdHgAAAL8AAAADAAAAAwGAACfbG9jYQAAAsAAAAAIAAAACABiATBtYXhwAAACqAAAABgAAAAgAA8ASm5hbWUAAAToAAABQgAAAlXu73sOcG9zdAAABiwAAAAeAAAAME3QpOBwcmVwAAAEbAAAAHYAAAB/aFGpk3jaTY6xa8JAGMW/O62BDi0tJLYQincXEypYIiGJjSgHniQ6umTsUEyLm5BV6NDBP8Tpts6F0v+k/0an2i+itHDw3v2+9+DBKTzsJNnWJNTgHEy4BgG3EMI9DCEDOGEXzDADU5hBKMIgNPZqoD3SilVaXZCER3/I7AtxEJLtzzuZfI+VVkprxTlXShWKb3TBecG11rwoNlmmn1P2WYcJczl32etSpKnziC7lQyWe1smVPy/Lt7Kc+0vWY/gAgIIEqAN9we0pwKXreiMasxvabDQMM4riO+qxM2ogwDGOZTXxwxDiycQIcoYFBLj5K3EIaSctAq2kTYiw+ymhce7vwM9jSqO8JyVd5RH9gyTt2+J/yUmYlIR0s04n6+7Vm1ozezUeLEaUjhaDSuXHwVRgvLJn1tQ7xiuVv/ocTRF42mNgZGBgYGbwZOBiAAFGJBIMAAizAFoAAABiAGIAznjaY2BkYGAA4in8zwXi+W2+MjCzMIDApSwvXzC97Z4Ig8N/BxYGZgcgl52BCSQKAA3jCV8CAABfAAAAAAQAAEB42mNgZGBg4f3vACQZQABIMjKgAmYAKEgBXgAAeNpjYGY6wTiBgZWBg2kmUxoDA4MPhGZMYzBi1AHygVLYQUCaawqDA4PChxhmh/8ODDEsvAwHgMKMIDnGL0x7gJQCAwMAJd4MFwAAAHjaY2BgYGaA4DAGRgYQkAHyGMF8NgYrIM3JIAGVYYDT+AEjAwuDFpBmA9KMDEwMCh9i/v8H8sH0/4dQc1iAmAkALaUKLgAAAHjaTY9LDsIgEIbtgqHUPpDi3gPoBVyRTmTddOmqTXThEXqrob2gQ1FjwpDvfwCBdmdXC5AVKFu3e5MfNFJ29KTQT48Ob9/lqYwOGZxeUelN2U2R6+cArgtCJpauW7UQBqnFkUsjAY/kOU1cP+DAgvxwn1chZDwUbd6CFimGXwzwF6tPbFIcjEl+vvmM/byA48e6tWrKArm4ZJlCbdsrxksL1AwWn/yBSJKpYbq8AXaaTb8AAHja28jAwOC00ZrBeQNDQOWO//sdBBgYGRiYWYAEELEwMTE4uzo5Zzo5b2BxdnFOcALxNjA6b2ByTswC8jYwg0VlNuoCTWAMqNzMzsoK1rEhNqByEyerg5PMJlYuVueETKcd/89uBpnpvIEVomeHLoMsAAe1Id4AAAAAAAB42oWQT07CQBTGv0JBhagk7HQzKxca2sJCE1hDt4QF+9JOS0nbaaYDCQfwCJ7Au3AHj+LO13FMmm6cl7785vven0kBjHCBhfpYuNa5Ph1c0e2Xu3jEvWG7UdPDLZ4N92nOm+EBXuAbHmIMSRMs+4aUEd4Nd3CHD8NdvOLTsA2GL8M9PODbcL+hD7C1xoaHeLJSEao0FEW14ckxC+TU8TxvsY6X0eLPmRhry2WVioLpkrbp84LLQPGI7c6sOiUzpWIWS5GzlSgUzzLBSikOPFTOXqly7rqx0Z1Q5BAIoZBSFihQYQOOBEdkCOgXTOHA07HAGjGWiIjaPZNW13/+lm6S9FT7rLHFJ6fQbkATOG1j2OFMucKJJsxIVfQORl+9Jyda6Sl1dUYhSCm1dyClfoeDve4qMYdLEbfqHf3O/AdDumsjAAB42mNgYoAAZQYjBmyAGYQZmdhL8zLdDEydARfoAqIAAAABAAMABwAKABMAB///AA8AAQAAAAAAAAAAAAAAAAABAAAAAA==) format('woff');
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #24292e;
+  line-height: 1.5;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b31d28;
+  color: #fafbfc;
+}
+
+.markdown-body .pl-c2 {
+  background-color: #d73a49;
+  color: #fafbfc;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #22863a;
+  font-weight: 700;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #005cc5;
+  font-weight: 700;
+}
+
+.markdown-body .pl-mi {
+  color: #24292e;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #24292e;
+  font-weight: 700;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffeef0;
+  color: #b31d28;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #f0fff4;
+  color: #22863a;
+}
+
+.markdown-body .pl-mc {
+  background-color: #ffebda;
+  color: #e36209;
+}
+
+.markdown-body .pl-mi2 {
+  background-color: #005cc5;
+  color: #f6f8fa;
+}
+
+.markdown-body .pl-mdr {
+  color: #6f42c1;
+  font-weight: 700;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  color: #032f62;
+  text-decoration: underline;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.markdown-body hr:before {
+  content: "";
+  display: table;
+}
+
+.markdown-body hr:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-bottom: 0!important;
+  padding-top: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-bottom: 8px!important;
+  padding-top: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body:before {
+  content: "";
+  display: table;
+}
+
+.markdown-body:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.markdown-body hr {
+  background-color: #e1e4e8;
+  border: 0;
+  height: .25em;
+  margin: 24px 0;
+  padding: 0;
+}
+
+.markdown-body blockquote {
+  border-left: .25em solid #dfe2e5;
+  color: #6a737d;
+  padding: 0 1em;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #fafbfc;
+  border: 1px solid #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+  color: #444d56;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: .3em;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  color: #6a737d;
+  font-size: .85em;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 0;
+}
+
+.markdown-body dl dd {
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+.markdown-body table {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  background-color: #fff;
+  box-sizing: content-box;
+  max-width: 100%;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: .2em .4em;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  background: transparent;
+  border: 0;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  word-break: normal;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  max-width: auto;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+}
+
+.markdown-body .commit-tease-sha {
+  color: #444d56;
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 90%;
+}
+
+.markdown-body .blob-wrapper {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  color: rgba(27,31,35,.3);
+  cursor: pointer;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+  user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  line-height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  color: #24292e;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  overflow: visible;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  background: #ffea7f;
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+  color: #444d56;
+  display: inline-block;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+.markdown-body :checked+.radio-label {
+  border-color: #0366d6;
+  position: relative;
+  z-index: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+  </style>
+  <style>
+  /**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	/* This background color was intended by the author of this theme. */
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function,
+.token.class-name {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+  </style>
+  <style>
+  
+  </style>
+  <style>
+    .markdown-body {
+      font-family: -apple-system,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+    }
+
+    @media not print {
+      .markdown-body {
+        padding: 45px;
+      }
+
+      @media (max-width: 767px) {
+        .markdown-body {
+          padding: 15px;
+        }
+      }
+    }
+
+    .hf-container {
+      color: #24292e;
+      line-height: 1.3;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+      white-space: pre-wrap;
+    }
+    .markdown-body table {
+      display: table;
+    }
+    .markdown-body img[data-align="center"] {
+      display: block;
+      margin: 0 auto;
+    }
+    .markdown-body img[data-align="right"] {
+      display: block;
+      margin: 0 0 0 auto;
+    }
+    .markdown-body li.task-list-item {
+      list-style-type: none;
+    }
+    .markdown-body li > [type=checkbox] {
+      margin: 0 0 0 -1.3em;
+    }
+    .markdown-body input[type="checkbox"] ~ p {
+      margin-top: 0;
+      display: inline-block;
+    }
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+      list-style-type: decimal;
+    }
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+      list-style-type: decimal;
+    }
+  </style>
+  <style>.markdown-body a.footnote-ref {
+  text-decoration: none;
+}
+
+.footnotes {
+  font-size: .85em;
+  opacity: .8;
+}
+
+.footnotes li[role="doc-endnote"] {
+  position: relative;
+}
+
+.footnotes .footnote-back {
+  position: absolute;
+  font-family: initial;
+  top: .2em;
+  right: 1em;
+  text-decoration: none;
+}
+
+.inline-math.invalid,
+.multiple-math.invalid {
+  color: rgb(255, 105, 105);
+}
+
+.toc-container {
+  width: 100%;
+}
+
+.toc-container .toc-title {
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+.toc-container li,
+.toc-container ul,
+.toc-container ul li {
+  list-style: none !important;
+}
+
+.toc-container > ul {
+  padding-left: 0;
+}
+
+.toc-container ul li span {
+  display : flex;
+}
+
+.toc-container ul li span a {
+  color: inherit;
+  text-decoration: none;
+}
+.toc-container ul li span a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc-container ul li span span.dots {
+  flex: 1;
+  height: 0.65em;
+  margin: 0 10px;
+  border-bottom: 2px dotted black;
+}
+</style>
+  <style>.markdown-body{}pre.front-matter{display:none!important;}</style>
+</head>
+<body>
+  <article class="markdown-body"><h1 class="atx" id="brams-60---install-guide">BRAMS 6.0 - INSTALL GUIDE</h1>
+<p>Before You install the model BRAMS-6.0  You must have the prerequisites installed. See the document  <a href="http://ftp.cptec.inpe.br/pesquisa/bramsrd/BRAMS-6.0/docs/BRAMS_6.0_-_INSTALL_PREREQUISITES.html">BRAMS_6.0_-_INSTALL_PREREQUISITES</a> (extension md or html) to see how to install the requisites.</p>
+<ol>
+<li><p>Building PATHS and linking compilers.</p>
+<p>In order to compiler the BRAMS code using the compilers and libraries You install in prerequisites make the commands bellow.</p>
+<pre><code class="fenced-code-block language-batch"><span class="token command"><span class="token keyword">export</span> PATH={YOUR_DIR}<span class="token parameter attr-name">/bin<span class="token punctuation">:</span></span>$PATH</span>
+<span class="token command"><span class="token keyword">export</span> LD_LIBRARY_PATH={YOUR_DIR}<span class="token parameter attr-name">/lib<span class="token punctuation">:</span></span>$LD_LIBRARY_PATH</span>
+<span class="token command"><span class="token keyword">sudo</span> ln <span class="token parameter attr-name">-s</span> /usr/bin<span class="token parameter attr-name">/gfortran</span> {YOUR_DIR}/bin<span class="token parameter attr-name">/gfortran</span></span>
+<span class="token command"><span class="token keyword">sudo</span> ln <span class="token parameter attr-name">-s</span> /usr/bin<span class="token parameter attr-name">/gcc</span> {YOUR_DIR}/bin<span class="token parameter attr-name">/gcc</span></span></code></pre>
+<blockquote>
+<p>Notice: See the prerequisites document to use the correct {YOUR_DIR} .</p>
+</blockquote>
+<p>Please, check if Your path have in first part <strong>{YOUR_DIR}</strong> and if the correct library is in first part of LD_LIBRARY_PATH. </p>
+<pre><code class="fenced-code-block language-batch"><span class="token command"><span class="token keyword">echo</span> $PATH</span>
+<span class="token command"><span class="token keyword">echo</span> $LD_LIBRARY_PATH</span></code></pre>
+<p>Please check if Fortran and gcc version is the correct. </p>
+<pre><code class="fenced-code-block">gfortran --version
+gcc --version</code></pre>
+<p>The results must be something like. See that in this case we use 8.4.0.</p>
+<pre><code class="fenced-code-block">$ gfortran --version
+GNU Fortran (Ubuntu 8.4.0-4ubuntu1) 8.4.0
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+$ gcc --version
+gcc (Ubuntu 8.4.0-4ubuntu1) 8.4.0
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</code></pre>
+</li>
+<li><h2 class="atx" id="configure-the-model">Configure the model</h2>
+<p>Now You must configure the model passing all libreries You will be use. The <strong>{YOUR_BIN_AREA}</strong> is the folder you want to put the binary and namelists of model. </p>
+<pre><code class="fenced-code-block language-bash">./configure --program-prefix<span class="token operator">=</span>BRAMS_6.0 --prefix<span class="token operator">=</span><span class="token punctuation">{</span>YOUR_BIN_AREA<span class="token punctuation">}</span> --enable-jules    --with-chem<span class="token operator">=</span>RELACS_TUV --with-aer<span class="token operator">=</span>SIMPLE --with-fpcomp<span class="token operator">=</span><span class="token punctuation">{</span>YOUR_DIR<span class="token punctuation">}</span>/bin/mpif90    --with-cpcomp<span class="token operator">=</span><span class="token punctuation">{</span>YOUR_DIR<span class="token punctuation">}</span>/bin/mpicc --with-fcomp<span class="token operator">=</span>gfortran --with-ccomp<span class="token operator">=</span>gcc --with-netcdff<span class="token operator">=</span><span class="token punctuation">{</span>YOUR_DIR<span class="token punctuation">}</span> --with-netcdfc<span class="token operator">=</span><span class="token punctuation">{</span>YOUR_DIR<span class="token punctuation">}</span> --with-wgrib2<span class="token operator">=</span><span class="token punctuation">{</span>YOUR_DIR<span class="token punctuation">}</span></code></pre>
+</li>
+</ol>
+<p>Bellow an example of use, where {YOUR_BIN_AREA} is /home/oscar.</p>
+<pre><code class="fenced-code-block language-bash">./configure --program-prefix<span class="token operator">=</span>BRAMS_6.0 --prefix<span class="token operator">=</span>/home/oscar --enable-jules    --with-chem<span class="token operator">=</span>RELACS_TUV --with-aer<span class="token operator">=</span>SIMPLE --with-fpcomp<span class="token operator">=</span>/opt/gnu8/bin/mpif90    --with-cpcomp<span class="token operator">=</span>/opt/gnu8/bin/mpicc --with-fcomp<span class="token operator">=</span>gfortran --with-ccomp<span class="token operator">=</span>gcc --with-netcdff<span class="token operator">=</span>/opt/gnu8 --with-netcdfc<span class="token operator">=</span>/opt/gnu8 --with-wgrib2<span class="token operator">=</span>/opt/gnu8</code></pre>
+<ol start="3">
+<li><h2 class="atx" id="make-and-make-install">Make and Make install</h2>
+<p>The make command will create the brams-6.0 executable. After creation it is necessary to run the make install command so that the basic files for the run are copied to the area set in {YOUR_BIN_AREA}</p>
+<pre><code class="fenced-code-block language-bash"><span class="token function">make</span>
+<span class="token function">make</span> <span class="token function">install</span></code></pre>
+<p>The output of BRAMS's model is presented with colors in terminal. If You save the output log (by "&gt;&amp;" use) may be a problem if You want to edit the file. Is possibles to make a filter to extract all special symbols used to color the output. To make the filter just</p>
+<pre><code class="fenced-code-block language-bash"><span class="token function">make</span> filter
+<span class="token function">make</span> install-filter</code></pre>
+<p>BRAM's models needs a lot of input files. One of them is the Initial and boundary conditions (IC). This files is created from a global model data. Two diferents data input must be created, from NCEP model GFS or from ERA5 data. To create the IC data You must create the PRE-BRAMS utility.</p>
+<pre><code class="fenced-code-block language-bash"><span class="token function">make</span> pre-brams
+<span class="token function">make</span> install-pre-brams</code></pre>
+</li>
+<li><h2 class="atx" id="download-tables-fixed-files-an-a-test-case">Download tables, fixed files an a test case</h2>
+<p>A series of fixed files and tables are required to run the model. You can get them by downloading the compressed file available in the ftp area. This file has 16GB and may take a while to download. It depends on your network speed. We advise you to check the checksum of the file to make sure that the download has not broken it.</p>
+<pre><code class="fenced-code-block language-bash"><span class="token builtin class-name">cd</span> <span class="token punctuation">{</span>YOUR_BIN_AREA<span class="token punctuation">}</span>
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>
+<span class="token function">wget</span> http://ftp.cptec.inpe.br/pesquisa/bramsrd/BRAMS-6.0/test_set_data/MD5SUM
+<span class="token function">wget</span> http://ftp.cptec.inpe.br/pesquisa/bramsrd/BRAMS-6.0/test_set_data/brams6.0_test_bin.tar.xz
+md5sum brams6.0_test_bin.tar.xz
+<span class="token function">cat</span> MD5SUM
+<span class="token function">tar</span> -xvf brams6.0_test_bin.tar.xz</code></pre>
+</li>
+<li><h2 class="atx" id="running-a-small-meteorological-case">Running a small meteorological case</h2>
+<p>The BRAMS Model is a limited area model and therefore requires input data from outputs from a global model. In the test case presented here, these data are already ready and available. For "expert" cases a new document shows how to get this data and generate it. The BRAMS model runs in 3 distinct phases:</p>
+<p>i) <strong>MAKESFC</strong> - Creates the surface files using the input files that contain global them and adjusts them to the specifications chosen by the user and arranged in the input namelist. The BRAMS namelist is called RAMSIN.</p>
+</li>
+</ol>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1633527826058" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="367.1893615722656" style="max-width: 1219.1640625px;" viewBox="0 0 1219.1640625 367.1893615722656"><style>#mermaid-1633527826058{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1633527826058 .error-icon{fill:#552222;}#mermaid-1633527826058 .error-text{fill:#552222;stroke:#552222;}#mermaid-1633527826058 .edge-thickness-normal{stroke-width:2px;}#mermaid-1633527826058 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1633527826058 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1633527826058 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1633527826058 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1633527826058 .marker{fill:#333333;}#mermaid-1633527826058 .marker.cross{stroke:#333333;}#mermaid-1633527826058 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1633527826058 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-1633527826058 .label text{fill:#333;}#mermaid-1633527826058 .node rect,#mermaid-1633527826058 .node circle,#mermaid-1633527826058 .node ellipse,#mermaid-1633527826058 .node polygon,#mermaid-1633527826058 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1633527826058 .node .label{text-align:center;}#mermaid-1633527826058 .node.clickable{cursor:pointer;}#mermaid-1633527826058 .arrowheadPath{fill:#333333;}#mermaid-1633527826058 .edgePath .path{stroke:#333333;stroke-width:1.5px;}#mermaid-1633527826058 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1633527826058 .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-1633527826058 .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-1633527826058 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1633527826058 .cluster text{fill:#333;}#mermaid-1633527826058 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80,100%,96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1633527826058:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1633527826058 flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-NDVI LE-BRAMS" id="L-NDVI-BRAMS" style="opacity: 1;"><path class="path" d="M142.71875,80.28832244873047L142.71875,123.84490203857422L636.5234375,179.51018407706005" marker-end="url(#arrowhead6023)" style="fill:none"></path><defs><marker id="arrowhead6023" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-TOPOGRAPHY LE-BRAMS" style="opacity: 1;" id="L-TOPOGRAPHY-BRAMS"><path class="path" d="M380.15625,86.34490203857422L380.15625,123.84490203857422L636.5234375,176.0191607236843" marker-end="url(#arrowhead6024)" style="fill:none"></path><defs><marker id="arrowhead6024" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-SST LE-BRAMS" style="opacity: 1;" id="L-SST-BRAMS"><path class="path" d="M568.2578125,78.8411636352539L568.2578125,123.84490203857422L636.5234375,162.22557553784216" marker-end="url(#arrowhead6025)" style="fill:none"></path><defs><marker id="arrowhead6025" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-VEGETATION LE-BRAMS" style="opacity: 1;" id="L-VEGETATION-BRAMS"><path class="path" d="M781.6953125,85.75305938720703L781.6953125,123.84490203857422L713.4296875,162.22557553784216" marker-end="url(#arrowhead6026)" style="fill:none"></path><defs><marker id="arrowhead6026" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-SOIL LE-BRAMS" style="opacity: 1;" id="L-SOIL-BRAMS"><path class="path" d="M1016.03125,79.4383316040039L1016.03125,123.84490203857422L713.4296875,177.0800411978916" marker-end="url(#arrowhead6027)" style="fill:none"></path><defs><marker id="arrowhead6027" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-RAMSIN LE-BRAMS" style="opacity: 1;" id="L-RAMSIN-BRAMS"><path class="path" d="M1149.6015625,69.67245101928711L1149.6015625,123.84490203857422L713.4296875,178.98382750604853" marker-end="url(#arrowhead6028)" style="fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead6028" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-TOPFILES" style="opacity: 1;" id="L-BRAMS-TOPFILES"><path class="path" d="M636.5234375,194.58420164946915L460.140625,243.84490203857422L460.140625,281.68804931640625" marker-end="url(#arrowhead6029)" style="fill:none"></path><defs><marker id="arrowhead6029" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-SFCFILES" style="opacity: 1;" id="L-BRAMS-SFCFILES"><path class="path" d="M648.01171875,206.34490203857422L603.0703125,243.84490203857422L603.0703125,281.8654022216797" marker-end="url(#arrowhead6030)" style="fill:none"></path><defs><marker id="arrowhead6030" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-SSTFPFX" style="opacity: 1;" id="L-BRAMS-SSTFPFX"><path class="path" d="M701.2734375,206.34490203857422L745.1015625,243.84490203857422L745.1015625,281.8654022216797" marker-end="url(#arrowhead6031)" style="fill:none"></path><defs><marker id="arrowhead6031" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-NDVIFPFX" style="opacity: 1;" id="L-BRAMS-NDVIFPFX"><path class="path" d="M713.4296875,194.58420164946915L889.8125,243.84490203857422L889.8125,281.3449020385742" marker-end="url(#arrowhead6032)" style="fill:none"></path><defs><marker id="arrowhead6032" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform="translate(142.71875,123.84490203857422)"><g transform="translate(-134.71875,-12.5)" class="label"><rect rx="0" ry="0" width="269.4375" height="25"></rect><foreignObject width="269.4375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-NDVI-BRAMS" class="edgeLabel L-LS-NDVI' L-LE-BRAMS">datafix_model/NDVI_MODIS_GRADS</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(380.15625,123.84490203857422)"><g transform="translate(-82.71875,-12.5)" class="label"><rect rx="0" ry="0" width="165.4375" height="25"></rect><foreignObject width="165.4375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-TOPOGRAPHY-BRAMS" class="edgeLabel L-LS-TOPOGRAPHY' L-LE-BRAMS">datafix_model/topo1km</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(568.2578125,123.84490203857422)"><g transform="translate(-85.3828125,-12.5)" class="label"><rect rx="0" ry="0" width="170.765625" height="25"></rect><foreignObject width="170.765625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-SST-BRAMS" class="edgeLabel L-LS-SST' L-LE-BRAMS">datafix_model/sst_week</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(781.6953125,123.84490203857422)"><g transform="translate(-108.0546875,-12.5)" class="label"><rect rx="0" ry="0" width="216.109375" height="25"></rect><foreignObject width="216.109375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-VEGETATION-BRAMS" class="edgeLabel L-LS-VEGETATION' L-LE-BRAMS">datafix_model/GL_OGE_INPE</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(1016.03125,123.84490203857422)"><g transform="translate(-106.28125,-12.5)" class="label"><rect rx="0" ry="0" width="212.5625" height="25"></rect><foreignObject width="212.5625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-SOIL-BRAMS" class="edgeLabel L-LS-SOIL' L-LE-BRAMS">datafix_model/GL_FAO_INPE</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-RAMSIN-BRAMS" class="edgeLabel L-LS-RAMSIN' L-LE-BRAMS"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(460.140625,243.84490203857422)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-TOPFILES" class="edgeLabel L-LS-BRAMS' L-LE-TOPFILES">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(603.0703125,243.84490203857422)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-SFCFILES" class="edgeLabel L-LS-BRAMS' L-LE-SFCFILES">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(745.1015625,243.84490203857422)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-SSTFPFX" class="edgeLabel L-LS-BRAMS' L-LE-SSTFPFX">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(889.8125,243.84490203857422)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-NDVIFPFX" class="edgeLabel L-LS-BRAMS' L-LE-NDVIFPFX">dataout/SFC</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="flowchart-NDVI-10110" label-offset-y="7.077247065149207" transform="translate(142.71875,47.17245101928711)" style="opacity: 1;"><path d="M 0,7.077247065149207 a 24.6796875,7.077247065149207 0,0,0 49.359375 0 a 24.6796875,7.077247065149207 0,0,0 -49.359375 0 l 0,52.07724706514921 a 24.6796875,7.077247065149207 0,0,0 49.359375 0 l 0,-52.07724706514921" transform="translate(-24.6796875,-33.11587059772381)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-14.6796875,-12.5)"><foreignObject width="29.359375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">ndvi</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-BRAMS-10111" transform="translate(674.9765625,183.84490203857422)"><rect rx="0" ry="0" x="-38.453125" y="-22.5" width="76.90625" height="45" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-28.453125,-12.5)"><foreignObject width="56.90625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">BRAMS</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-TOPOGRAPHY-10112" label-offset-y="11.114968064426547" transform="translate(380.15625,47.17245101928711)"><path d="M 0,11.114968064426547 a 50.03125,11.114968064426547 0,0,0 100.0625 0 a 50.03125,11.114968064426547 0,0,0 -100.0625 0 l 0,56.11496806442655 a 50.03125,11.114968064426547 0,0,0 100.0625 0 l 0,-56.11496806442655" transform="translate(-50.03125,-39.17245209663982)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-40.03125,-12.5)"><foreignObject width="80.0625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">topography</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-SST-10114" label-offset-y="6.112475210123713" transform="translate(568.2578125,47.17245101928711)"><path d="M 0,6.112475210123713 a 20.2265625,6.112475210123713 0,0,0 40.453125 0 a 20.2265625,6.112475210123713 0,0,0 -40.453125 0 l 0,51.11247521012371 a 20.2265625,6.112475210123713 0,0,0 40.453125 0 l 0,-51.11247521012371" transform="translate(-20.2265625,-31.668712815185568)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-10.2265625,-12.5)"><foreignObject width="20.453125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">sst</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-VEGETATION-10116" label-offset-y="10.72040554048265" transform="translate(781.6953125,47.17245101928711)"><path d="M 0,10.72040554048265 a 46.921875,10.72040554048265 0,0,0 93.84375 0 a 46.921875,10.72040554048265 0,0,0 -93.84375 0 l 0,55.72040554048265 a 46.921875,10.72040554048265 0,0,0 93.84375 0 l 0,-55.72040554048265" transform="translate(-46.921875,-38.580608310723974)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.921875,-12.5)"><foreignObject width="73.84375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">vegetation</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-SOIL-10118" label-offset-y="6.5105851899787375" transform="translate(1016.03125,47.17245101928711)"><path d="M 0,6.5105851899787375 a 22.0078125,6.5105851899787375 0,0,0 44.015625 0 a 22.0078125,6.5105851899787375 0,0,0 -44.015625 0 l 0,51.51058518997874 a 22.0078125,6.5105851899787375 0,0,0 44.015625 0 l 0,-51.51058518997874" transform="translate(-22.0078125,-32.26587778496811)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-12.0078125,-12.5)"><foreignObject width="24.015625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">soil</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-RAMSIN-10120" transform="translate(1149.6015625,47.17245101928711)"><rect rx="5" ry="5" x="-61.5625" y="-22.5" width="123.125" height="45" class="label-container" style="fill:#f9f;stroke:#333;stroke-width:4px;"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-51.5625,-12.5)"><foreignObject width="103.125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">RAMSIN_SFC</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-TOPFILES-10124" label-offset-y="10.719385933595143" transform="translate(460.140625,320.26712799072266)"><path d="M 0,10.719385933595143 a 46.9140625,10.719385933595143 0,0,0 93.828125 0 a 46.9140625,10.719385933595143 0,0,0 -93.828125 0 l 0,55.71938593359514 a 46.9140625,10.719385933595143 0,0,0 93.828125 0 l 0,-55.71938593359514" transform="translate(-46.9140625,-38.579078900392716)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.9140625,-12.5)"><foreignObject width="73.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">top_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-SFCFILES-10126" label-offset-y="10.601151907847372" transform="translate(603.0703125,320.26712799072266)"><path d="M 0,10.601151907847372 a 46.015625,10.601151907847372 0,0,0 92.03125 0 a 46.015625,10.601151907847372 0,0,0 -92.03125 0 l 0,55.601151907847374 a 46.015625,10.601151907847372 0,0,0 92.03125 0 l 0,-55.601151907847374" transform="translate(-46.015625,-38.40172786177106)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.015625,-12.5)"><foreignObject width="72.03125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">sfc_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-SSTFPFX-10128" label-offset-y="10.601151907847372" transform="translate(745.1015625,320.26712799072266)"><path d="M 0,10.601151907847372 a 46.015625,10.601151907847372 0,0,0 92.03125 0 a 46.015625,10.601151907847372 0,0,0 -92.03125 0 l 0,55.601151907847374 a 46.015625,10.601151907847372 0,0,0 92.03125 0 l 0,-55.601151907847374" transform="translate(-46.015625,-38.40172786177106)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.015625,-12.5)"><foreignObject width="72.03125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">sst_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-NDVIFPFX-10130" label-offset-y="10.948148668587088" transform="translate(889.8125,320.26712799072266)"><path d="M 0,10.948148668587088 a 48.6953125,10.948148668587088 0,0,0 97.390625 0 a 48.6953125,10.948148668587088 0,0,0 -97.390625 0 l 0,55.94814866858709 a 48.6953125,10.948148668587088 0,0,0 97.390625 0 l 0,-55.94814866858709" transform="translate(-48.6953125,-38.92222300288063)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-38.6953125,-12.5)"><foreignObject width="77.390625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">ndv_OQ3g</div></foreignObject></g></g></g></g></g></g></svg></div>
+<p>   ii) <strong>MAKEVFILE</strong> - From the global data the phase creates the files with the boundary conditions and initial conditions interpolating them to the specifications chosen by the user and arranged in THE RAMSIN.</p>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1633527826137" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="337.8753662109375" style="max-width: 256.9375px;" viewBox="0 0 256.9375 337.8753662109375"><style>#mermaid-1633527826137{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1633527826137 .error-icon{fill:#552222;}#mermaid-1633527826137 .error-text{fill:#552222;stroke:#552222;}#mermaid-1633527826137 .edge-thickness-normal{stroke-width:2px;}#mermaid-1633527826137 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1633527826137 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1633527826137 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1633527826137 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1633527826137 .marker{fill:#333333;}#mermaid-1633527826137 .marker.cross{stroke:#333333;}#mermaid-1633527826137 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1633527826137 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-1633527826137 .label text{fill:#333;}#mermaid-1633527826137 .node rect,#mermaid-1633527826137 .node circle,#mermaid-1633527826137 .node ellipse,#mermaid-1633527826137 .node polygon,#mermaid-1633527826137 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1633527826137 .node .label{text-align:center;}#mermaid-1633527826137 .node.clickable{cursor:pointer;}#mermaid-1633527826137 .arrowheadPath{fill:#333333;}#mermaid-1633527826137 .edgePath .path{stroke:#333333;stroke-width:1.5px;}#mermaid-1633527826137 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1633527826137 .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-1633527826137 .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-1633527826137 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1633527826137 .cluster text{fill:#333;}#mermaid-1633527826137 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80,100%,96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1633527826137:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1633527826137 flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-IC LE-BRAMS" id="L-IC-BRAMS" style="opacity: 1;"><path class="path" d="M60.46875,69.77018356323242L60.46875,107.27018356323242L100.5419921875,144.77018356323242" marker-end="url(#arrowhead6047)" style="fill:none"></path><defs><marker id="arrowhead6047" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-RAMSIN LE-BRAMS" style="opacity: 1;" id="L-RAMSIN-BRAMS"><path class="path" d="M188.703125,61.38509178161621L188.703125,107.27018356323242L148.6298828125,144.77018356323242" marker-end="url(#arrowhead6048)" style="fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead6048" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-IVAR" style="opacity: 1;" id="L-BRAMS-IVAR"><path class="path" d="M124.5859375,189.77018356323242L124.5859375,227.27018356323242L124.5859375,264.7701835632324" marker-end="url(#arrowhead6049)" style="fill:none"></path><defs><marker id="arrowhead6049" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform="translate(60.46875,107.27018356323242)"><g transform="translate(-52.46875,-12.5)" class="label"><rect rx="0" ry="0" width="104.9375" height="25"></rect><foreignObject width="104.9375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-IC-BRAMS" class="edgeLabel L-LS-IC' L-LE-BRAMS">datain/GRADS</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-RAMSIN-BRAMS" class="edgeLabel L-LS-RAMSIN' L-LE-BRAMS"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(124.5859375,227.27018356323242)"><g transform="translate(-46.9921875,-12.5)" class="label"><rect rx="0" ry="0" width="93.984375" height="25"></rect><foreignObject width="93.984375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-IVAR" class="edgeLabel L-LS-BRAMS' L-LE-IVAR">dataout/IVAR</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="flowchart-IC-10138" label-offset-y="5.590062111801243" transform="translate(60.46875,38.88509178161621)" style="opacity: 1;"><path d="M 0,5.590062111801243 a 18,5.590062111801243 0,0,0 36 0 a 18,5.590062111801243 0,0,0 -36 0 l 0,50.590062111801245 a 18,5.590062111801243 0,0,0 36 0 l 0,-50.590062111801245" transform="translate(-18,-30.885093167701864)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-8,-12.5)"><foreignObject width="16" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">IC</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-BRAMS-10139" transform="translate(124.5859375,167.27018356323242)"><rect rx="0" ry="0" x="-38.453125" y="-22.5" width="76.90625" height="45" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-28.453125,-12.5)"><foreignObject width="56.90625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">BRAMS</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-RAMSIN-10140" transform="translate(188.703125,38.88509178161621)"><rect rx="5" ry="5" x="-60.234375" y="-22.5" width="120.46875" height="45" class="label-container" style="fill:#f9f;stroke:#333;stroke-width:4px;"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-50.234375,-12.5)"><foreignObject width="100.46875" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">RAMSIN_VFL</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-IVAR-10144" label-offset-y="6.701738334858189" transform="translate(124.5859375,297.3227882385254)"><path d="M 0,6.701738334858189 a 22.890625,6.701738334858189 0,0,0 45.78125 0 a 22.890625,6.701738334858189 0,0,0 -45.78125 0 l 0,51.70173833485819 a 22.890625,6.701738334858189 0,0,0 45.78125 0 l 0,-51.70173833485819" transform="translate(-22.890625,-32.55260750228729)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-12.890625,-12.5)"><foreignObject width="25.78125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">ivar</div></foreignObject></g></g></g></g></g></g></svg></div>
+<p>   iii) <strong>INITIAL</strong> - This is the phase of model time integration where prediction data will be produced as specified in RAMSIN. </p>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1633527826186" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="381.448974609375" style="max-width: 1262.078125px;" viewBox="0 0.000003814697265625 1262.078125 381.448974609375"><style>#mermaid-1633527826186{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1633527826186 .error-icon{fill:#552222;}#mermaid-1633527826186 .error-text{fill:#552222;stroke:#552222;}#mermaid-1633527826186 .edge-thickness-normal{stroke-width:2px;}#mermaid-1633527826186 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1633527826186 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1633527826186 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1633527826186 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1633527826186 .marker{fill:#333333;}#mermaid-1633527826186 .marker.cross{stroke:#333333;}#mermaid-1633527826186 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1633527826186 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-1633527826186 .label text{fill:#333;}#mermaid-1633527826186 .node rect,#mermaid-1633527826186 .node circle,#mermaid-1633527826186 .node ellipse,#mermaid-1633527826186 .node polygon,#mermaid-1633527826186 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1633527826186 .node .label{text-align:center;}#mermaid-1633527826186 .node.clickable{cursor:pointer;}#mermaid-1633527826186 .arrowheadPath{fill:#333333;}#mermaid-1633527826186 .edgePath .path{stroke:#333333;stroke-width:1.5px;}#mermaid-1633527826186 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1633527826186 .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-1633527826186 .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-1633527826186 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1633527826186 .cluster text{fill:#333;}#mermaid-1633527826186 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80,100%,96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1633527826186:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1633527826186 flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-RAMSIN LE-BRAMS" id="L-RAMSIN-BRAMS" style="opacity: 1;"><path class="path" d="M63.7890625,71.74414443969727L63.7890625,127.98828887939453L589.03125,183.8953197720809" marker-end="url(#arrowhead6081)" style="fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead6081" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-TABLES LE-BRAMS" style="opacity: 1;" id="L-TABLES-BRAMS"><path class="path" d="M207.59375,71.74414443969727L207.59375,127.98828887939453L589.03125,182.49355438752536" marker-end="url(#arrowhead6082)" style="fill: none;"></path><defs><marker id="arrowhead6082" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-TOPFILES LE-BRAMS" style="opacity: 1;" id="L-TOPFILES-BRAMS"><path class="path" d="M342.5234375,87.82322311401367L342.5234375,127.98828887939453L589.03125,179.8917844242883" marker-end="url(#arrowhead6083)" style="fill:none"></path><defs><marker id="arrowhead6083" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-SFCFILES LE-BRAMS" style="opacity: 1;" id="L-SFCFILES-BRAMS"><path class="path" d="M485.453125,87.64587020874023L485.453125,127.98828887939453L589.03125,171.7440644569523" marker-end="url(#arrowhead6084)" style="fill:none"></path><defs><marker id="arrowhead6084" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-SSTFPFX LE-BRAMS" style="opacity: 1;" id="L-SSTFPFX-BRAMS"><path class="path" d="M627.484375,87.64587020874023L627.484375,127.98828887939453L627.484375,165.48828887939453" marker-end="url(#arrowhead6085)" style="fill:none"></path><defs><marker id="arrowhead6085" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-NDVIFPFX LE-BRAMS" style="opacity: 1;" id="L-NDVIFPFX-BRAMS"><path class="path" d="M772.1953125,88.1663703918457L772.1953125,127.98828887939453L665.9375,172.04486718744397" marker-end="url(#arrowhead6086)" style="fill:none"></path><defs><marker id="arrowhead6086" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-IVAR LE-BRAMS" style="opacity: 1;" id="L-IVAR-BRAMS"><path class="path" d="M893.78125,81.79674911499023L893.78125,127.98828887939453L665.9375,179.3243212680585" marker-end="url(#arrowhead6087)" style="fill:none"></path><defs><marker id="arrowhead6087" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-UMID LE-BRAMS" style="opacity: 1;" id="L-UMID-BRAMS"><path class="path" d="M1029.1328125,90.48828887939453L1029.1328125,127.98828887939453L665.9375,182.24399291160555" marker-end="url(#arrowhead6088)" style="fill:none"></path><defs><marker id="arrowhead6088" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-VAR LE-BRAMS" style="opacity: 1;" id="L-VAR-BRAMS"><path class="path" d="M1197.8359375,71.74414443969727L1197.8359375,127.98828887939453L665.9375,183.94308649599614" marker-end="url(#arrowhead6089)" style="fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead6089" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-POST" style="opacity: 1;" id="L-BRAMS-POST"><path class="path" d="M589.03125,203.90893364070885L482.56640625,247.98828887939453L482.56640625,285.48828887939453" marker-end="url(#arrowhead6090)" style="fill:none"></path><defs><marker id="arrowhead6090" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-HIS" style="opacity: 1;" id="L-BRAMS-HIS"><path class="path" d="M635.90283203125,210.48828887939453L649.93359375,247.98828887939453L649.93359375,293.86681365966797" marker-end="url(#arrowhead6091)" style="fill:none"></path><defs><marker id="arrowhead6091" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-BRAMS LE-ANA" style="opacity: 1;" id="L-BRAMS-ANA"><path class="path" d="M665.9375,203.90893364070885L772.40234375,247.98828887939453L772.40234375,292.58111572265625" marker-end="url(#arrowhead6092)" style="fill:none"></path><defs><marker id="arrowhead6092" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-RAMSIN-BRAMS" class="edgeLabel L-LS-RAMSIN' L-LE-BRAMS"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(207.59375,127.98828887939453)"><g transform="translate(-21.3515625,-12.5)" class="label"><rect rx="0" ry="0" width="42.703125" height="25"></rect><foreignObject width="42.703125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-TABLES-BRAMS" class="edgeLabel L-LS-TABLES' L-LE-BRAMS">tables</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(342.5234375,127.98828887939453)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-TOPFILES-BRAMS" class="edgeLabel L-LS-TOPFILES' L-LE-BRAMS">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(485.453125,127.98828887939453)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-SFCFILES-BRAMS" class="edgeLabel L-LS-SFCFILES' L-LE-BRAMS">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(627.484375,127.98828887939453)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-SSTFPFX-BRAMS" class="edgeLabel L-LS-SSTFPFX' L-LE-BRAMS">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(772.1953125,127.98828887939453)"><g transform="translate(-44.9140625,-12.5)" class="label"><rect rx="0" ry="0" width="89.828125" height="25"></rect><foreignObject width="89.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-NDVIFPFX-BRAMS" class="edgeLabel L-LS-NDVIFPFX' L-LE-BRAMS">dataout/SFC</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(893.78125,127.98828887939453)"><g transform="translate(-46.9921875,-12.5)" class="label"><rect rx="0" ry="0" width="93.984375" height="25"></rect><foreignObject width="93.984375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-IVAR-BRAMS" class="edgeLabel L-LS-IVAR' L-LE-BRAMS">dataout/IVAR</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(1029.1328125,127.98828887939453)"><g transform="translate(-44.4609375,-12.5)" class="label"><rect rx="0" ry="0" width="88.921875" height="25"></rect><foreignObject width="88.921875" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-UMID-BRAMS" class="edgeLabel L-LS-UMID' L-LE-BRAMS">datain/UMID</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-VAR-BRAMS" class="edgeLabel L-LS-VAR' L-LE-BRAMS"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(482.56640625,247.98828887939453)"><g transform="translate(-50.6953125,-12.5)" class="label"><rect rx="0" ry="0" width="101.390625" height="25"></rect><foreignObject width="101.390625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-POST" class="edgeLabel L-LS-BRAMS' L-LE-POST">dataout/POST</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(649.93359375,247.98828887939453)"><g transform="translate(-42.25,-12.5)" class="label"><rect rx="0" ry="0" width="84.5" height="25"></rect><foreignObject width="84.5" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-HIS" class="edgeLabel L-LS-BRAMS' L-LE-HIS">dataout/HIS</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(772.40234375,247.98828887939453)"><g transform="translate(-44.4765625,-12.5)" class="label"><rect rx="0" ry="0" width="88.953125" height="25"></rect><foreignObject width="88.953125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-BRAMS-ANA" class="edgeLabel L-LS-BRAMS' L-LE-ANA">dataout/ANL</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="flowchart-RAMSIN-10172" transform="translate(63.7890625,49.244144439697266)" style="opacity: 1;"><rect rx="5" ry="5" x="-55.7890625" y="-22.5" width="111.578125" height="45" class="label-container" style="fill:#f9f;stroke:#333;stroke-width:4px;"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-45.7890625,-12.5)"><foreignObject width="91.578125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">RAMSIN_INI</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-BRAMS-10173" transform="translate(627.484375,187.98828887939453)"><rect rx="0" ry="0" x="-38.453125" y="-22.5" width="76.90625" height="45" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-28.453125,-12.5)"><foreignObject width="56.90625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">BRAMS</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-TABLES-10174" transform="translate(207.59375,49.244144439697266)"><rect rx="5" ry="5" x="-38.015625" y="-22.5" width="76.03125" height="45" class="label-container" style="fill:#bbf;stroke:#f66;stroke-width:2px;"></rect><g class="label" transform="translate(0,0)"><g style="color:#fff;" transform="translate(-28.015625,-12.5)"><foreignObject width="56.03125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">tables...</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-TOPFILES-10178" label-offset-y="10.719385933595143" transform="translate(342.5234375,49.244144439697266)"><path d="M 0,10.719385933595143 a 46.9140625,10.719385933595143 0,0,0 93.828125 0 a 46.9140625,10.719385933595143 0,0,0 -93.828125 0 l 0,55.71938593359514 a 46.9140625,10.719385933595143 0,0,0 93.828125 0 l 0,-55.71938593359514" transform="translate(-46.9140625,-38.579078900392716)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.9140625,-12.5)"><foreignObject width="73.828125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">top_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-SFCFILES-10180" label-offset-y="10.601151907847372" transform="translate(485.453125,49.244144439697266)"><path d="M 0,10.601151907847372 a 46.015625,10.601151907847372 0,0,0 92.03125 0 a 46.015625,10.601151907847372 0,0,0 -92.03125 0 l 0,55.601151907847374 a 46.015625,10.601151907847372 0,0,0 92.03125 0 l 0,-55.601151907847374" transform="translate(-46.015625,-38.40172786177106)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.015625,-12.5)"><foreignObject width="72.03125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">sfc_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-SSTFPFX-10182" label-offset-y="10.601151907847372" transform="translate(627.484375,49.244144439697266)"><path d="M 0,10.601151907847372 a 46.015625,10.601151907847372 0,0,0 92.03125 0 a 46.015625,10.601151907847372 0,0,0 -92.03125 0 l 0,55.601151907847374 a 46.015625,10.601151907847372 0,0,0 92.03125 0 l 0,-55.601151907847374" transform="translate(-46.015625,-38.40172786177106)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-36.015625,-12.5)"><foreignObject width="72.03125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">sst_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-NDVIFPFX-10184" label-offset-y="10.948148668587088" transform="translate(772.1953125,49.244144439697266)"><path d="M 0,10.948148668587088 a 48.6953125,10.948148668587088 0,0,0 97.390625 0 a 48.6953125,10.948148668587088 0,0,0 -97.390625 0 l 0,55.94814866858709 a 48.6953125,10.948148668587088 0,0,0 97.390625 0 l 0,-55.94814866858709" transform="translate(-48.6953125,-38.92222300288063)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-38.6953125,-12.5)"><foreignObject width="77.390625" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">ndv_OQ3g</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-IVAR-10186" label-offset-y="6.701738334858189" transform="translate(893.78125,49.244144439697266)"><path d="M 0,6.701738334858189 a 22.890625,6.701738334858189 0,0,0 45.78125 0 a 22.890625,6.701738334858189 0,0,0 -45.78125 0 l 0,51.70173833485819 a 22.890625,6.701738334858189 0,0,0 45.78125 0 l 0,-51.70173833485819" transform="translate(-22.890625,-32.55260750228729)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-12.890625,-12.5)"><foreignObject width="25.78125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">ivar</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-UMID-10188" label-offset-y="12.496092528915288" transform="translate(1029.1328125,49.244144439697266)"><path d="M 0,12.496092528915288 a 62.4609375,12.496092528915288 0,0,0 124.921875 0 a 62.4609375,12.496092528915288 0,0,0 -124.921875 0 l 0,57.496092528915284 a 62.4609375,12.496092528915288 0,0,0 124.921875 0 l 0,-57.496092528915284" transform="translate(-62.4609375,-41.244138793372926)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-52.4609375,-12.5)"><foreignObject width="104.921875" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">GL_SM.GPNR</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-VAR-10190" transform="translate(1197.8359375,49.244144439697266)"><rect rx="5" ry="5" x="-56.2421875" y="-22.5" width="112.484375" height="45" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-46.2421875,-12.5)"><foreignObject width="92.484375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">variables.csv</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-POST-10193" label-offset-y="14.320232818924548" transform="translate(482.56640625,329.46863555908203)"><path d="M 0,14.320232818924548 a 83.8046875,14.320232818924548 0,0,0 167.609375 0 a 83.8046875,14.320232818924548 0,0,0 -167.609375 0 l 0,59.32023281892455 a 83.8046875,14.320232818924548 0,0,0 167.609375 0 l 0,-59.32023281892455" transform="translate(-83.8046875,-43.98034922838683)" class="label-container" style="fill:#2bf;stroke:#ff0;stroke-width:2px;"></path><g class="label" transform="translate(0,0)"><g style="color:#ff0;" transform="translate(-73.8046875,-12.5)"><foreignObject width="147.609375" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">brams-meteo...grads</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-HIS-10196" label-offset-y="8.734547820429407" transform="translate(649.93359375,329.46863555908203)"><path d="M 0,8.734547820429407 a 33.5625,8.734547820429407 0,0,0 67.125 0 a 33.5625,8.734547820429407 0,0,0 -67.125 0 l 0,53.734547820429405 a 33.5625,8.734547820429407 0,0,0 67.125 0 l 0,-53.734547820429405" transform="translate(-33.5625,-35.60182173064411)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-23.5625,-12.5)"><foreignObject width="47.125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">history</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-ANA-10198" label-offset-y="9.591679506933744" transform="translate(772.40234375,329.46863555908203)"><path d="M 0,9.591679506933744 a 38.90625,9.591679506933744 0,0,0 77.8125 0 a 38.90625,9.591679506933744 0,0,0 -77.8125 0 l 0,54.591679506933744 a 38.90625,9.591679506933744 0,0,0 77.8125 0 l 0,-54.591679506933744" transform="translate(-38.90625,-36.887519260400616)" class="label-container"></path><g class="label" transform="translate(0,0)"><g transform="translate(-28.90625,-12.5)"><foreignObject width="57.8125" height="25"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">analisys</div></foreignObject></g></g></g></g></g></g></svg></div>
+<blockquote>
+<p>WARNING: The first two phases (i and ii) should only be rotated with 1 processor!</p>
+</blockquote>
+<p>   The test case is small enough to run on a laptop or desktop with 3 processors and with 8GB memory. It covers an area as shown in the figure below.</p>
+<p>   <img alt="" src="http://ftp.cptec.inpe.br/pesquisa/bramsrd/BRAMS-6.0/docs/fig1.png"></p>
+<p>   This area is configured in RAMSIN with 60x60x45 points (x,y,z), 20 km of horizontal resolution (surface) and is centered at 22.6S, 45.2W. The test only allows it to run for 24 hours of forecast. After the end of the round, one can verify the behavior of the model by comparing the results that were produced and are in {YOUR_BIN_AREA}/dataout/POST with those stored in the {YOUR_BIN_AREA}/dataout/POST_COMPARE area. To look at the outputs (GRADS/CTL format) you need to know how to use grads software   </p>
+<blockquote>
+<p>WARNING: Make sure your environment is tuned to use the packages installed in the pre-requirements (PATH and LD_LIBRARY_PATH) To look at the outputs (GRADS/CTL format) you need to know how to use grads software..</p>
+</blockquote>
+<pre><code class="fenced-code-block language-bash"><span class="token builtin class-name">cd</span> <span class="token punctuation">{</span>YOUR_BIN_AREA<span class="token punctuation">}</span>
+mpirun -np <span class="token number">1</span> brams-6.0 -f RAMSIN_SFC_MID
+mpirun -np <span class="token number">1</span> brams-6.0 -f RAMSIN_VFL_MID
+mpirun -np <span class="token number">3</span> brams-6.0 -f RAMSIN_INI_MID</code></pre>
+<p>A series of logs will be shown on the screen in each of the 3 phases. Be aware of errors reported in these logs. Often there are non-existent files that have not been properly downloaded in the download or the system has some limitation. In the INITIAL phase you can follow the integrations by looking at the screen. It shows each timestep performed and other important information. See for example the figure below that shows part of these messages.</p>
+<p><img alt="" src="http://ftp.cptec.inpe.br/pesquisa/bramsrd/BRAMS-6.0/docs/fig2.png"></p>
+<ol start="6">
+<li><h2 class="atx" id="how-to-see-the-data-outputs">How to see the data outputs</h2>
+<p>The output of model as You read above is in GRADS file. May be used another formats but we will show how in expert users guide. If You are using Ubuntu Linux or some Debia derivated Linux You can install grads in a simple way, using apt-get command</p>
+<pre><code class="fenced-code-block language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> grads</code></pre>
+<p>To install grads right from source, please, see the information on site <a href="http://cola.gmu.edu/grads/downloads.php">GrADS Downloads</a>. Pay attention on the necessary libraries explained on <a href="http://cola.gmu.edu/grads/gadoc/supplibs2.html">GrADS Supplibs</a></p>
+<p>To learn about grads we recommend to read the document <a href="https://www.cpc.ncep.noaa.gov/products/international/grads/Advanced_GrADS_Manual.pdf">Grads Manual from NCEP</a>.</p>
+</li>
+<li><h2 class="atx" id="how-to-filter-the-log-output">How to filter the log output</h2>
+<p>Supposed You run the model and put the output in a file. See example:</p>
+<pre><code class="fenced-code-block language-bash"><span class="token builtin class-name">cd</span> <span class="token punctuation">{</span>YOUR_BIN_AREA<span class="token punctuation">}</span>
+mpirun -np <span class="token number">3</span> brams-6.0 -f RAMSIN_INI_MID <span class="token operator">&gt;&amp;</span> output.txt</code></pre>
+<p>  If You open the file output.txt using a specific editor (for example: vi) You will see all escape characters used for color the output. Example bellow ( a small peace of output log read by vi editor):</p>
+<pre><code class="fenced-code-block">+--------------+--------------+
+|  variable    |    grid 1    |
++--------------+--------------+
+^[[30m^[[47m|NNXP          |          0060|^[[0m
+^[[0m|NNYP          |          0060|^[[0m
+^[[30m^[[47m|NNZP          |          0045|^[[0m
+^[[0m|NXTNEST       |          0000|^[[0m
+^[[30m^[[47m|NSTRATX       |          0001|^[[0m
+^[[0m|NSTRATY       |          0001|^[[0m</code></pre>
+<p>This may appear a little bit confused. To solve the problema You must only run the filter (created in item 3 above) that comes with BRAMS model. Try</p>
+<pre><code class="fenced-code-block language-bash">filter output.txt</code></pre>
+<p>And then, You can see the same file with this look</p>
+</li>
+</ol>
+<pre><code class="fenced-code-block">+--------------+--------------+
+|  variable    |    grid 1    |
++--------------+--------------+
+|NNXP          |          0060|
+|NNYP          |          0060|
+|NNZP          |          0045|
+|NXTNEST       |          0000|
+|NSTRATX       |          0001|
+|NSTRATY       |          0001|</code></pre>
+<ol start="8">
+<li><h2 class="atx" id="how-to-generate-initial-and-boundary-conditions-ic-from-global-data">How to generate Initial and Boundary conditions (IC) from global data</h2>
+<p>The program "pre" created in item 3 above is the program that get data from global input files and converted them to IC for BRAMS. First of all You must edit a namelist file named <strong>pre.nm</strong>l. See the example bellow</p>
+<pre><code class="fenced-code-block">$ARGS_INPUT
+
+!!!!! DATE !!!!!
+
+init_year  = 2020,
+init_month = 08,
+init_day   = 18,
+init_hour  = 0,
+final_year = 2020,
+final_month= 08,
+final_day = 19,
+final_hour = 00,
+
+!!!!! TIME STEP !!!!!!!
+
+step  = 6, !Timestep in hours
+
+!!!!! ATMOS !!!!!
+atmos_type   = 1, !0=DP, 1=GFS Grib2, 2=ERA5
+atmos_prefix ='gfs.t00z.pgrb2.0p25.f',
+atmos_sufix  ='.2020081800.grib2',
+atmos_idir   ='./datain/GFS/',
+levels = 23,
+initial_latitude = -70., !initial latitude for domain of model (-90 to 90)  
+final_latitude  = 20., !final latitude for domain of model(-90 to 90)
+initial_longitude = 250., !initial longitude for domain of model (0 to 360)
+final_longitude = 358., !Final longitude for domain of model (0 to 360)
+
+!!!!! CHEM !!!!!! 
+chem_type     = 1, !0 = no Chem, 1 = CAMS 
+chem_idir  = "./datafix_cams/",
+chem1_prefix ='',
+chem1_sufix  ='-CAMS-EC-2010-2019-AMS',
+
+!!!!! OUTPUT !!!!!
+out_type   = 2, !0=text, 1=VFM, 2=Grads
+out_prefix = 'IC',
+out_sufix  = '',
+out_dir    = './datain/GRADS/',
+
+$END</code></pre>
+<p>The namelist is prepared for test case You have downloaded in item 4.  After You edit it You must run the pre.</p>
+<pre><code class="fenced-code-block language-bash">./pre</code></pre>
+<p>A lot of information will be show in screen and some files with IC will be write in the <strong>out_dir</strong> You fill in namelist._</p>
+<pre><code class="fenced-code-block">  $ls datain/GRADS -latr
+  rw-r--r--   1   lufla   lufla      2 KiB   Mon Sep 13 14:23:59 2021    IC2021011318.ctl 
+  rw-r--r--   1   lufla   lufla      2 KiB   Wed Oct  6 10:15:40 2021    IC2020081800.ctl 
+  rw-r--r--   1   lufla   lufla    297 MiB   Wed Oct  6 10:15:41 2021    IC2020081800.gra 
+  rw-r--r--   1   lufla   lufla      2 KiB   Wed Oct  6 10:15:43 2021    IC2020081806.ctl 
+  rw-r--r--   1   lufla   lufla    297 MiB   Wed Oct  6 10:15:44 2021    IC2020081806.gra 
+  rw-r--r--   1   lufla   lufla      2 KiB   Wed Oct  6 10:15:46 2021    IC2020081812.ctl 
+  rw-r--r--   1   lufla   lufla    297 MiB   Wed Oct  6 10:15:47 2021    IC2020081812.gra 
+  rw-r--r--   1   lufla   lufla      2 KiB   Wed Oct  6 10:15:49 2021    IC2020081818.ctl 
+  rw-r--r--   1   lufla   lufla    297 MiB   Wed Oct  6 10:15:51 2021    IC2020081818.gra 
+  rw-r--r--   1   lufla   lufla      2 KiB   Wed Oct  6 10:15:53 2021    IC2020081900.ctl 
+  rw-r--r--   1   lufla   lufla    297 MiB   Wed Oct  6 10:15:54 2021    IC2020081900.gra</code></pre>
+<p>This files will be used as inut for BRAMS´Model.</p>
+</li>
+<li><h2 class="atx" id="download-gfs-data-for-model">Download GFS Data for model</h2>
+<p>The BRAMS comes with a script in bash that get data from GFS from NCEP site. To get the data just run the script passing yera, month, day and output folder</p>
+<pre><code class="fenced-code-block language-bash">./getGFS.sh <span class="token number">2021</span> <span class="token number">10</span> 02 ./datain/GFS/</code></pre>
+<p> In the example above gfs data is downloaded for 02Oct2021 and the data will be put in ./datain/GFS/ directory.</p>
+</li>
+</ol>
+<p><strong><mark>Have Fun with BRAMS-6.0!</mark></strong></p>
+</article>
+</body>
+</html>

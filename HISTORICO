@@ -1,0 +1,2561 @@
+====================================================================
+ESTRUTURA DESTE ARQUIVO:
+trechos separados por linhas (=====) com o historico de modificacoes.
+Insira nova modificacao no inicio do arquivo, imediatamente abaixo da 
+mascara. (modificacoes ordenadas da mais nova para a mais velha)
+Cada Trecho com a mascara abaixo:
+====================================================================
+dia/mes/ano: Resumo da modificacao
+Autor: nome do autor
+
+Trabalho: descricao do trabalho
+
+Modulos modificados: lista dos modulos modificados
+
+Modificacoes: o que foi modificado em cada modulo
+
+Testes: descricao dos testes realizados e resultados atingidos=
+====================================================================
+====================================================================
+14/Abril/2008: Revisao do arquivo Historico
+Autor: Daniel Massaru
+
+Trabalho: Corrigir arquivo de Historico e acrescentar novas informacoes
+          sobre variaveis modificadas em 04/Abril/2008.
+
+Modulos modificados: HISTORICO
+
+Modificacoes: revisao do texto, formatacao do documento, remocao 
+da acentuacao e insercao de novas informacoes sobre as modificacoes 
+que realizei em 04/Abril/2008.
+
+Testes: nenhum
+====================================================================
+====================================================================
+13/Abril/2008: Insercao no CVS
+Autor: Jairo Panetta
+
+Trabalho: Inserir no CVS as modificacoes realizadas pelo Alvaro e Massaru
+          em Abril. Vide historico abaixo.
+
+
+Modulos modificados: core/rammain.f90 build/bin/include.mk.opt.pgi
+
+Modificacoes:
+core/rammain.f90: remove leitura de outro namelist que nao RAMSIN
+build/bin/include.mk.opt.pgi: substitui por versao com fastsse
+
+Testes: Tempos de Execucao e Reprodutibilidade Binaria
+        em 20km e 10km na America Latina, compinados com pgi.
+====================================================================
+=============================================e=======================
+09/Abril/2008: Alocacao dinamica para IPATHS e IGET_PATHS
+Autor: Alvaro L. Fazenda
+
+Trabalho: As variaveis citadas eram alocadas estaticamente em "node_mod" 
+          pelo numero maximo de grades e numero maximo de processadores: 
+          ipaths(5,7,maxgrds,maxmach) e iget_paths(6, maxgrds,maxmach) 
+          sem nenhuma necessidade. Atualmente o numero maximo de grades 
+          e de processadores foi substituido pelo numero atual de grades 
+          e processadores, respectivamente, dinamicamente durante a 
+          execucao do modelo.
+
+Modulos modificados: memory/rams_mem_alloc.f90, mpi/nod_mod.f90, 
+mpi/para_init.f90
+
+Modificacoes:
+** memory/rams_mem_alloc.f90
+Rotina para alocacao dinamica dos dados e respectiva chamada na subrotina
+rams_mem_alloc.
+** mpi/nod_mod.f90
+DE:
+ integer, dimension(5,7,maxgrds,maxmach) :: ipaths
+ integer, dimension(6,maxgrds,maxmach)   :: iget_paths
+PARA:
+ public :: ipaths
+ integer, allocatable :: ipaths(:,:,:,:)
+ public :: iget_paths
+ integer, allocatable :: iget_paths(:,:,:)
+** mpi/para_init.f90
+Correta definicao dos novos limitantes e correcao na inicializacao dos 
+dados na subrotina: "node_paths_par"
+
+Testes: Repetiu-se os testes para se obter reprodutibilidade binaria 
+        em relacao a variacao do numero de processadores e em relacao
+        a versao corrente do CVS
+====================================================================
+====================================================================
+08/Abril/2008: remocao do modulo rpara da lista de dependencias
+Autor: Daniel Massaru
+
+Trabalho: Remover codigo nao utilizado e excluir o modulo rpara da lista 
+          de dependencias
+
+Modulos modificados:
+src/brams/mpi/node_mod.f90
+src/brams/mpi/rpara.f90
+src/brams/mpi/mpass_init.f90e
+src/brams/mpi/para_init.f90
+src/brams/mpi/mpass_full.f90
+src/brams/mpi/mpass_init.f90
+src/brams/mpi/mpass_nest.f90
+src/brams/mpi/mpass_feed.f90
+src/brams/mpi/mpass_cyclic.f90
+src/brams/mpi/par_decomp.f90
+src/brams/core/rams_master.f90
+src/brams/core/rnode.f90
+src/brams/core/coriolis.f90
+src/brams/nesting/nest_drivers.f90
+src/brams/fdda/oda_nudge.f90
+src/brams/fdda/varf_update.f90
+src/brams/fdda/varf_read.f90
+src/brams/init/rams_grid.f90
+src/brams/turb/turb_k.f90
+src/brams/turb/diffuse.f90
+build/bin/depend_model.mk
+build/bin/objects_model.mk
+
+Modificacoes:
+Limpeza de codigo nos fontes descritos acima, remocao das referencias 
+a rpara nos arquivos depend_model.mk e objects_model.mk
+
+Testes: Reprodutibilidade binaria com a versao do CVS, no 10x10, 
+        no 20Km e no 10Km
+====================================================================
+====================================================================
+08/Abril/2008: Habilita/Desabilita Output
+Autor: Alvaro L. Fazenda
+
+Trabalho: Foi verificado que a versao unificada nao permitia que se 
+          desabilitasse a saida de dados atraves da chave IOUTPUT 
+          (RAMSIN). Assim foi feita a devida correcao para que a 
+          mesma seja considerada pelo modelo.
+
+Modulos modificados: core/rams_master.f90, init/rdint.f90
+
+Modificacoes:
+** init/rams_master.f90 (Rotina: "OneProc")
+DE:        instFlag = frqanl > 0.0
+PARA:        instFlag = (frqanl>0.0 .and. IOUTPUT/=0)
+e
+DE:        histFlag = frqhis > 0.0
+PARA:        histFlag = (frqhis>0.0 .and. IOUTPUT/=0)
+** init/rdint.f90 (Rotina: "initOneProc")
+DE:   histFlag=.true.; instFlag=.true.; liteFlag=.false.; meanFlag=.false.
+PARA:
+if (IOUTPUT/=0) then
+   histFlag=.true.; instFlag=.true.
+else
+    histFlag=.false.; instFlag=.false.
+endif
+if (FRQLITE/=0.) then
+    liteFlag=.true.
+else
+    liteFlag=.false.
+endif
+if (AVGTIM/=0.) then
+    meanFlag=.true.
+else
+    meanFlag=.false.
+endif
+
+Testes: Habilitando e desabilitando a chave IOUTPUT liga-se e desliga-se 
+        a saida de dados
+====================================================================
+====================================================================
+05/Abril/2008: Eliminacao de "inode_paths_master" e "iget_paths_master"
+Autor: Alvaro L. Fazenda
+
+Trabalho: As variaveis citadas eram alocadas estaticamente em "rpara" 
+          pelo numero maximo de grades e numero maximo de processadores, 
+          para todos os processadores: inode_paths_master(5,7,maxgrds,maxmach,maxmach) 
+          e iget_paths_master(6, maxgrds,maxmach,maxmach), desta forma todos os 
+          processadores conhecem  todos os caminhos de transmissao de dados para 
+          todos os processadores. Entretanto, esta informacao nao e utilizada por 
+          nenhum processo, sendo necessaria apenas pelo Mestre na antiga versao, 
+          a qual nao mais e necessaria. Toda a informacao necessaria esta contida 
+          em cada processo, o qual conhece apenas a sua vizinhanca imediata atraves 
+          dos arrays IPATHS e IGET_PATHS.
+
+Modulos modificados: mpi/rpara.f90, mpi/nod_mod.f90, mpi/para_init.f90, 
+core/rams_master.f90
+
+Modificacoes:
+** mpi/rpara.f90
+Rotina ja desabilitada anteriormente por uma modifcacao do Massaru.
+** mpi/nod_mod.f90
+Comentar os arrays citados e retirar a necessidade de se copiar os seus 
+valores globais para dados locais na subrotina "StoreNodePathsBuffAlloc"
+** mpi/para_init.f90
+Definicao dos arrays IPATHS e IGET_PATHS diretamente na subrotina: 
+"node_paths_par" em substituicao aos antigos inode_paths_master e 
+iget_paths_master.
+** core/rams_master.f90
+Modificacao na chamada a subrotina "StoreNodePathsBuffAlloc"
+
+Testes: Repetiu-se os testes para se obter reprodutibilidade binaria 
+        em relacao a variacao do numero de processadores e em relacao 
+        a versao corrente do CVS
+====================================================================
+====================================================================
+04/Abril/2008: Preparar o codigo para remocao do modulo rpara
+Autor: Daniel Massaru
+
+Trabalho: Localizar variaveis do modulo node_mod 
+          (src/brams/mpi/node_mod.f90) que estao duplicadas no modulo 
+          rpara (src/brams/mpi/rpara.f90). Substituir estas variaveis 
+          duplicadas, pelos seus valores correspondentes em node_mod. 
+
+Modulos modificados:
+src/brams/mpi/node_mod.f90
+src/brams/mpi/rpara.f90
+src/brams/mpi/mpass_init.f90
+src/brams/mpi/para_init.f90
+src/brams/mpi/mpass_full.f90
+src/brams/mpi/mpass_init.f90
+src/brams/mpi/mpass_nest.f90
+src/brams/mpi/mpass_feed.f90
+src/brams/mpi/mpass_cyclic.f90
+src/brams/mpi/par_decomp.f90
+src/brams/core/rams_master.f90
+src/brams/core/rnode.f90
+src/brams/core/coriolis.f90
+src/brams/nesting/nest_drivers.f90
+src/brams/fdda/oda_nudge.f90
+src/brams/fdda/varf_update.f90
+src/brams/fdda/varf_read.f90
+src/brams/init/rams_grid.f90
+src/brams/turb/turb_k.f90
+src/brams/turb/diffuse.f90
+
+Modificacoes:
+
+Variaveis renomeadas:
+mainnum, renomeada para master_num, definida em node_mod
+nxbegc, renomeada para nodeia, definida em node_mod
+nxendc, renomeada para nodeiz, definida em node_mod
+nybegc, renomeada para nodeja, definida em node_mod
+nyendc, renomeada para nodejz, definida em node_mod
+ixoff, renomeada para nodei0, definida em node_mod
+iyoff, renomeada para nodej0, definida em node_mod
+ibcflg, renomeada para nodeibcon, definida em node_mod
+mibcon(ng), renomeada para nodeibcon(mynum,ng), definida em  em node_mod
+mia(ng), renomeada para nodeia(mynum,ng), definida em node_mod
+miz(ng), renomeada para nodeiz(mynum,ng), definida em node_mod
+mja(ng), renomeada para nodeja(mynum,ng), definida em node_mod
+mjz(ng), renomeada para nodejz(mynum,ng), definida em node_mod
+mi0(ng), renomeada para nodei0(mynum,ng), definida em node_mod
+mj0(ng), renomeada para nodej0(mynum,ng), definida em node_mod
+ibounds, renomeada para nodebounds, definida em node_mod
+nbuff_nest1, renomeada para nbuff_nest, definida em node_mod
+newbuff_nest, renomeada para nbuff_nest, definida em node_mod
+
+Variaveis removidas do codigo: 
+iparallel, nodemxp_u, nodemyp_u, nodemzp_u, nodeia_u, nodeiz_u, 
+nodeja_u, nodejz_u, nodei0_u, nodej0_u, nodeibcon_u, master_num_u, 
+nmachs_u, mchnum_u, mynum_u
+
+Subrotinas removidas do codigo (definidas em node_mod): 
+StoreAllSubDomains, StoreNodePathsBuffAlloc
+
+Variaveis movidas de rpara para node_mod: 
+ipara, nxbeg, nxend, nybeg, nyend, ixb, ixe, iyb, iye, npxy
+
+Observacao: 
+As variaveis ptimes, perf, hperf, nextnode, nestflg e ifeednode estavam
+definidas no modulo rpara e foram removidas do codigo por nao serem 
+usadas em lugar algum. Acredito que estas variaveis pertencam a subrotinas 
+que ainda nao foram implementadas. A verificar.
+
+Testes: Reprodutibilidade binaria com a versao do CVS, no 10x10, 
+        no 20Km e no 10Km
+====================================================================
+====================================================================
+27/Mar/2008: Preparacao para remover rpara
+Autor: Jairo Panetta
+
+Trabalho: Documentar rpara e o uso de suas variaveis. Eliminar
+          rotinas desnecessarias que usavam rpara.
+Modulos modificados: vide abaixo
+
+Modificacoes:
+src/brams/core/coriolis.f90:   remocao de comentarios desnecessarios
+src/brams/core/local_proc.f90: remocao de rotinas desnecessarias (obsoletas no unificado)
+src/brams/mpi/mpass_dtl.f90    remocao de rotinas desnecessarias (obsoletas no unificado)
+src/brams/mpi/mpass_oda.f90:   remocao do arquivo (cotinha apenas rotinas obsoletas no unificado)
+src/brams/mpi/par_decomp.f90:  insercao de use only para rpara
+src/brams/mpi/para_init.f90:   remocao de rotinas desnecessarias e insercao de use only para rpara
+src/brams/mpi/paral.f90:       remocao do arquivo (cotinha apenas rotinas obsoletas no unificado)
+src/brams/mpi/rpara.f90:       insercao de documentacao 
+build/bin/depend_model.mk:     remocao de mpass_oda e paral
+build/bin/objects_model.mk:    remocao de mpass_oda e paral
+
+Testes: So recompilei.
+====================================================================
+====================================================================
+24/Mar/2008: Leitura de ivs durante integracao
+             (feito duas vezes; a segunda para remover os dois arquivos
+              mpass_input.f90 e mpass_inputdata.f90)
+Autor: Jairo Panetta
+
+Trabalho: Converte leitura de ivs durante a integracao de
+          paralelismo mestre-escravo para unificado.
+          Remocao de rotinas e arquivos nao utilizados.
+Modulos modificados: vide abaixo
+
+Modificacoes:
+build/bin/depend_model.mk:    remocao de mpass_inputdata e mpass_init
+build/bin/objects_model.mk:   remocao de mpass_inputdata e mpass_init
+build/bin/include.mk.opt.pgi: otimizacoes agressivas
+core/rams_master.f90:         remocao de subroutine rams_output;
+                              substituicao de leitura de ivs por versao unificada
+fdda/varf_read.f90:           remocao de subroutine varf_read
+mpi/mpass_init.f90:           removido
+mpi/mpass_inputdata.f90:      removido
+utils/lib/parlibf.F90:        remocao de erro de sintaxe no trecho 
+                              compilado sem MPI
+Testes: No 10x10, reprodutibilidade binaria com 1 a 9 processadores,
+        em execucoes de 24 horas.
+        No 20km, reprodutibilidade binaria com 100, 200, 300, 400, 500
+        e 600 processadores.
+====================================================================
+===================================================================
+23/Mar/2008: Atualiza include.mk.opt.pgi
+Autor: Jairo Panetta
+
+Trabalho: Move opcoes de compilacao pgi citadas na modificacao
+          abaixo mas presentes apenas no arquivo include.mk.opt
+          (inexistente no CVS) para include.mk.opt.pgi
+Modulos modificados: build/bin/include.mk.opt.pgi
+
+Modificacoes:
+build/bin/include.mk.opt.pgi: opcoes de compilacao -fast
+Testes: Nenhum - testes ja feitos na versao abaixo.
+====================================================================
+====================================================================
+23/Mar/2008: Unificar definicao de i8 e compilacao otimizada
+Autor: Jairo Panetta
+
+Trabalho: Unifiquei definicao de i8 (em utils/include/i8.h).
+          Obrigou resolver duplicidade de definicoes de i8
+          por use association, dado que poucos modulos possuem PRIVATE.
+          Devemos, no futuro, usar use only em todos os use e private
+          em todos os modulos.
+          Removi chave de compilacao que testa invasao de area
+          e experimentei com O2 e fast. Com O2 o resultado eh identico
+          a O0. Com fast o resultado muda. Nos dois casos mantem-se
+          reprodutibilidade binaria.
+Modulos modificados: vide lista abaixo.
+
+Modificacoes:
+build/bin/depend_model.mk
+build/bin/depend_utils.mk
+src/brams/bc/rbnd.f90
+src/brams/core/radvc.f90
+src/brams/core/rams_master.f90
+src/brams/core/rtimh.f90
+src/brams/core/rtimi.f90
+src/brams/cuparm/cu_read.f90
+src/brams/cuparm/mem_cuparm.f90
+src/brams/cuparm/mem_grell.f90
+src/brams/cuparm/mem_shcu.f90
+src/brams/fdda/cond_update.f90
+src/brams/fdda/mem_oda.f90
+src/brams/io/inithis.f90
+src/brams/io/ranlavg.f90
+src/brams/io/rio.f90
+src/brams/isan/isan_io.f90
+src/brams/memory/mem_basic.f90
+src/brams/memory/mem_grid.f90
+src/brams/memory/mem_scalar.f90
+src/brams/memory/mem_varinit.f90
+src/brams/memory/var_tables.f90
+src/brams/memory/vtab_fill.f90
+src/brams/micro/mem_micro.f90
+src/brams/mpi/mpass_full.f90
+src/brams/mpi/mpass_inputdata.f90
+src/brams/mpi/mpass_lbc.f90
+src/brams/mpi/mpass_nest.f90
+src/brams/mpi/mpass_st.f90
+src/brams/mpi/paral.f90
+src/brams/radiate/mem_radiate.f90
+src/brams/surface/mem_leaf.f90
+src/brams/turb/mem_opt_scratch.f90
+src/brams/turb/mem_turb.f90
+src/brams/turb/mem_turb_scalar.f90
+src/utils/lib/numutils.f90
+src/utils/lib/modules/an_header.f90
+
+Testes: No 10x10, reprodutibilidade binaria com 1 a 9 processadores,
+        nas 2 primeiras iteracoes
+	No 20km, reprodutibilidade binaria com 1, 10, 100, 200, 300, 400
+        e 500 processadores nas 2 primeiras iteracoes.
+====================================================================
+====================================================================
+22/Mar/2008: Interfaces explicitas para parlibf
+Autor: Jairo Panetta
+
+Trabalho: Corrigir erros na passagem de parametros para as rotinas
+          de parlibf, tornando suas interfaces explicitas.
+          Obrigou multiplas modificacoes por requerer argumentos i8.
+          Durante a inverstigacao, percebi que ha duas definicoes
+          para i8, uma em i8.h e outra em an_header. A corrigir.
+Modulos modificados: vide lista abaixo.
+
+Modificacoes:
+build/bin/depend_model.mk  novas dependencias de parlibf
+utils/lib/parlibf.F90      transforma em modulo
+utils/lib/error_mess.f90   move rotina fatal_error para parlibf, evitando
+                           "use parlib"
+bc/cyclic_mod.f90          transforma area para buffers ciclicos de character
+                           em reais, devido a interface explicita de parlibf  
+core/coriolis.f90          argumentos dos procedimentos de parlibf      
+core/local_proc.f90        argumentos dos procedimentos de parlibf      
+core/rammain.f90           argumentos dos procedimentos de parlibf      
+core/rams_master.f90       argumentos dos procedimentos de parlibf      
+core/rnode.f90             argumentos dos procedimentos de parlibf      
+mpi/mpass_cyclic.f90       argumentos dos procedimentos de parlibf      
+mpi/mpass_dtl.f90          argumentos dos procedimentos de parlibf      
+mpi/mpass_feed.f90         argumentos dos procedimentos de parlibf      
+mpi/mpass_full.f90         argumentos dos procedimentos de parlibf      
+mpi/mpass_init.f90         argumentos dos procedimentos de parlibf; esse
+                           arquivo pode ser removido - nenhuma rotina utilizada
+mpi/mpass_inputdata.f90    argumentos dos procedimentos de parlibf      
+mpi/mpass_lbc.f90          argumentos dos procedimentos de parlibf      
+mpi/mpass_nest.f90         argumentos dos procedimentos de parlibf      
+mpi/mpass_st.f90           argumentos dos procedimentos de parlibf      
+mpi/ReadBcst.f90           argumentos dos procedimentos de parlibf      
+
+Testes: No 10x10, reprodutibilidade binaria com 1 a 9 processadores,
+        nas 2 primeiras iteracoes
+====================================================================
+====================================================================
+21/Mar/2008: Tamanho de envio MPI_PACKED
+Autor: Jairo Panetta
+
+Trabalho: Buscando reprodutibilidade binaria, detectei
+          que sflux_v(5,6) nao era passada corretamente
+          do proc 3 para o 1 na execucao com 4 procs do 10x10.
+          Esse era o motivo de campos errados em acoustic.
+          Isso ocorria por utilizar o argumento position em
+          MPI_Pack e MPI_ISend como em Fortran (inicia em 1,
+          termina em ipos, envia ipos-1). Troquei por C
+          (inicia em 0, termina em ipos, envia ipos). Erro
+          corrigino.
+          Durante a inverstigacao, ficou claro que ha erros
+          na passagem de argumentos para parlibf, devido a 
+          interface implicita. Argumentos formais i8 recebem
+          valores i4. Eh necessario transformar parlibf em
+          modulo e corrigir os argumentos.
+Modulos modificados: mpi/mpass_lbc.f90
+
+Modificacoes:
+mpi/mpass_lbc.f90: Trocar ipos de Fortran para C.
+
+Testes: No 10x10, reprodutibilidade binaria com 1 a 9 processadores,
+        nas 2 primeiras iteracoes
+====================================================================
+====================================================================
+17/Mar/2008: Re-correcao do mesmo bug em leaf3
+Autor: Jairo Panetta
+
+Trabalho: Craig e Bob mudaram de ideia sobre o valor a atribuir
+          a thetacan, alterando a correcao anterior.
+Modulos modificados: surface/leaf3.f90
+
+Modificacoes:
+surface/leaf3.f90: calculo de thetacan em qualquer coluna, indicado
+                   por Craig e Bob.
+
+Testes: No 10x10, reprodutibilidade binaria com 1, 2 e 3 processadores,
+        nas 2 primeiras iteracoes. Perde reprodutibilidade com 4 procs.
+        Causa: campos errados na troca de mensagens em acoust_new.
+====================================================================
+====================================================================
+13/Mar/2008: Correcao de bug em leaf3
+Autor: Jairo Panetta
+
+Trabalho: Variavel thetacan nao era calculada em algumas colunas.
+          Resulta perda de reprodutibilidade binaria, pois quando
+          nao calculada causa dependencia da coluna anterior.
+Modulos modificados: surface/leaf3.f90, build/bin/depend_model.mk
+
+Modificacoes:
+surface/leaf3.f90: calculo de thetacan em qualquer coluna, indicado
+                   pelo Bob Walko. Ajuste dos use.
+build/bin/depend_model.mk: corrige as dependencias geradas pelo leaf3.
+
+Testes: No 10x10, reprodutibilidade binaria com 1, 2 e 3 processadores,
+        nas 2 primeiras iteracoes. Perde reprodutibilidade com 4 procs.
+====================================================================
+====================================================================
+11/Mar/2008: Atualiza lista de dependencias de coriolis.f90
+Autor: Jairo Panetta
+
+Trabalho: Inclui dependencia de rpara na lista de dependencias de coriolis
+          no arquivo build/bin/depend_model.mk, apos trabalho do Massaru.
+Modulos modificados: build/bin/depend_model.mk
+
+Modificacoes:
+build/bin/depend_model.mk: inclui a dependencia
+
+Testes: Compilacao.
+====================================================================
+====================================================================
+11/Mar/2008: Corrige inicializacao de fcoru e fcorv
+Autor: Daniel Massaru
+
+Trabalho: Corrige inicializacao de corriolis (u e v). Segue esquema
+	  similar ao utilizado anteriormente, na correcao da 
+	  inicializacao de dn0u e dn0v.
+Modulos modificados: core/coriolis.f90
+
+Modificacoes:
+core/coriolis: substitui a chamada a SendBorder e GetBorder pela 
+	       chamada a CorrectBorderFcorx e CorrectBorderFcory
+
+Testes: Verificacao de compatibilidade da ghost zone ao final da 
+	inicializacao. Falta adaptar o codigo  para considerar
+	mais de uma grade.
+====================================================================
+11/Mar/2008: Corrige inicializacao dos campos de velocidade
+Autor: Jairo Panetta
+
+Trabalho: Corrige inicializacao dos campos de velocidade, 
+          originalmente calculada no mestre.
+          A rotina FieldInit (@init/rinit) invocava a rotina dumset, que 
+          corrige bordas (@init/rdint) como se estivesse no mestre (todas
+          as bordas eram fronteiras).
+Modulos modificados: init/rinit, init/rdint, 
+
+Modificacoes:
+init/rinit: corrige argumento de dumset em FieldInit (de 15 para ibcon)
+init/rdint: edicao boba.
+
+Testes: Verificacao de compatibilidade da ghost zone ao final da inicializacao:
+        Falta compatibilidade da ghost zone apenas para FCORU, FCORV.
+        Tal falta de compatibilidade nao pode alterar os resultados, pois
+        os valores que divergem nao sao utilizados na computacao.
+====================================================================
+====================================================================
+10/Mar/2008: Corrige inicializacao de dn0v
+Autor: Jairo Panetta
+
+Trabalho: Corrige inicializacao de dn0v, originalmente calculada no mestre.
+          Trabalho similar a correcao de dn0u (vide abaixo).
+Modulos modificados: init/rinit, mpi/mpass_lbc, core/coriolis
+
+Modificacoes:
+init/rinit: insere chamada a CorrectBorderDn0v
+mpi/mpass_lbc: Insere CorrectBorderDn0v
+core/coriolis: edicao boba.
+
+Testes: Verificacao de compatibilidade da ghost zone ao final da inicializacao:
+        Falta compatibilidade da ghost zone para FCORU, FCORV, UP, UC, VP, VC,
+        tanto no 10x10 quanto no 20km.
+====================================================================
+====================================================================
+09/Mar/2008: Corrige inicializacao de dn0u
+Autor: Jairo Panetta
+
+Trabalho: Corrige inicializacao de dn0u, originalmente calculada no mestre.
+          Eh necessario corrigir a ghost zone "alta" em x quando nao for
+          fronteira do dominio real. Corrigido enviando dos processadores
+          que calcularam corretamente as regioes a alterar para os processadores
+          que as calcularam errado, por troca de mensagens (recv nao bloqueantes,
+          send bloqueantes).
+          Involve remover correcao incorretas de dn0u e dn0v.
+          Falta corrigir dn0v por procedimento similar.
+
+Modulos modificados: init/rinit, mpi/mpass_lbc, mpi/para_init
+
+Modificacoes:
+init/rinit: substitui chamadas a node_sendlbc_dn0uv e node_getlbc_dn0uv
+            (que corrigiam erradamante dn0u e dn0v) por 
+            CorrectBorderDn0u que corrige apenas dn0u
+mpi/mpass_lbc: Insere CorrectBorderDn0u
+mpi/para_init: insere mensagens de depuracao, controladas por dumpLocal
+
+Testes: Como falta corrigir dn0v, apenas garanti que as ghost zones 
+        do 10x10 de 1 a 9 processos estavam com dn0u corretas.
+====================================================================
+====================================================================
+08/Mar/2008: Reprodutibilidade binaria de grid_vars, calculada em rams_grid
+Autor: Jairo Panetta
+
+Trabalho: Como parte do desenvolvimento do unificado, eh necessario
+          mover o calculo da geometria da grade (variavel do tipo grid_vars)
+          do mestre para os escravos. O calculo paralelo da geometria requer 
+          troca de mensagens com os vizinhos. Apos diversas tentativas 
+          infrutiferas, optei por calcular a geometria para o dominio completo
+          para, em seguida, extrair o trecho do dominio local.
+
+Modulos modificados: init/rams_grid, memory/mem_grid, memory/rams_mem_alloc,
+                     mksfc/mksfc_topo, build/bin/include.mk.opt
+
+Modificacoes:
+init/rams_grid: re-escrita de grid_setput (renomeada GridSetup), para calcular
+                a geometria do dominio completo e extrair o trecho local.
+                Remocao de rotinas nao utilizadas.
+memory/mem_grid: (1) renomeia variavel global global_grid para globalTopo. Essa
+                 variavel guarda a topografia, lida de um arquivo, para ser
+                 copiada para a variavel do tipo grid_vars.
+                 (2) cria rotina ExtractLocalFromGlobal, que extrai o trecho
+                 local do dominio global
+memory/rams_mem_alloc: renomeia global-grid para globalTopo
+mksfc/mksfc_top:  renomeia global-grid para globalTopo
+includ.mk.opt: inseri opcao de invasao de area
+
+Testes: Compara Versao1 (mestre + 1 escravo) com unificado na grade 10x10
+        e na grade de 20km. Testa inicializacao e 2 timesteps apenas.
+        Compilacao portland sem otimizacao com teste de invasao de area
+        no caso unificado; sem teste invasao de area na Versao1.
+
+        Resultados: (1) arquivos head diferentes apos inicializacao, devido
+                    aos erros do BRAMS
+                    (2) arquivos vfm com um processador batem binario
+                    (3) arquivos vfm da inicializacao batem binario para 
+                        qualquer numero de processadores do unificado 
+                        (testes de 1 a 9 processos nos dois RAMSIN)
+                    (4) arquivos vfm de 1 e 2 timestep diferem com mais
+                        de um processador do unificado.
+                        (testes de 1 a 9 processos nos dois RAMSIN)
+        Verificacao de compatibilidade da ghost zone ao final da inicializacao:
+        Falta compatibilidade da ghost zone para DN0V, FCORU, FCORV, UP, UC, VP, VC,
+        tanto no 10x10 quanto no 20km.
+====================================================================
+
+29/04/2008 : Reducao de memoria e leitura de RAMSIN
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Todas as alocacoes estaticas do modulo node_mod.f90 foram transformadas em alocacoes dinamicas.
+          A leitura do RAMSIN passou a ser feito pelo processo que faz IO (MASTER_NUM). Uma vez que os
+          valoers estao lidos o mesmo processo faz um broadcast para os demais processos.
+
+Arquivos modificados: src/brams/mpi/ReadBcst.f90, src/brams/mpi/node_mod.f90, src/utils/lib/parlibf.F90,
+                      src/brams/core/rams_master.f90, build/bin/depend_model.mk
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+====================================================================
+
+29/04/2008 : Chamada de RAMS_getvar de forma errada
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Sugestao de correcao do Vitorio:
+1) RAMS_getvar is defined as a function but referenced as a subroutine in recycle
+Erro detectado e corrigido. 
+7) RAMS_getvar has five dummy arguments but it is called with six actual arguments.
+Erro detectado e corrigido. Retirei o argumento extra (segundo escalar):
+!!$   ierr=RAMS_getvar('UP', 3, ngrid, ui2(1,1,1), rr_scr1(1), innpr(1:lenf))   !OLD
+ ierr=RAMS_getvar('UP', ngrid, ui2(1,1,1), rr_scr1(1), innpr(1:lenf)) 
+
+Arquivos modificados: src/brams/isan first_rams.f90, src/brams/io recycle.f90, src/utils/lib getvar.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+====================================================================
+
+29/04/2008 : Chamada de RAMS_getvar de forma errada
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Sugestao de correcao do Vitorio:
+2) In mem_scratch3_grell line 631 the variable XQES_CUPX_CUP is referenced. I suspect this is two lines in one. You really should use IMPLICIT NONE everywhere.
+Erro detectado e corrigido. Tratava-se de duas variaveis mesmo: xqes_cup e x_cup. A rotina NAO tinha IMPLICIT NONE.
+3) Same at line 640: DTC should be EDTC?
+Erro detectado e corrigido. Trata-se realmente de EDTC. 
+
+Arquivos modificados: src/brams/cuparm mem_scratch3_grell.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+====================================================================
+29/04/2008 : chamada a dealloc_all de forma errada
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Sugestao de correcao do Vitorio:
+6) The routine dealloc_all is called with one argument but no dummy argument is defined.
+Erro detectado e corrigido.
+
+Arquivos modificados: 
+src/brams/memory/mem_grid_dim_defs.f90
+src/brams/memory/rams_mem_alloc.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+Alvaro
+====================================================================
+29/04/2008 : Chamada a rotina balan de forma errada
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Sugestao de correcao do Vitorio:
+9) subroutine balan is called with nsib actual arg: no corresponding dummy arg.
+Erro detectado e corrigido
+
+Arquivos modificados:
+src/brams/sib/sib2_co2.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+Alvaro
+====================================================================
+29/04/2008 : Substituicao de ETIME por CPU_TIME (funcao padrao do F90)
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Sugestao de correcao do Vitorio:
+BRAMS uses ETIME: it is non standard. I suggest you use CPU_TIME instead.
+Corrigido.
+
+Arquivos modificados:
+src/utils/lib rsys.F90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+Alvaro
+====================================================================
+29/04/2008 : Correcao de possivel invasao de area em RAMS_filelist
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Gerou a definicao formal de uma quantidade maxima de arquivos a serem lidos.
+Tornou-se tambem explicita a passagem de argumentos cujos dados vinham do RAMSIN e tinham alocacao estatica.
+
+Arquivos modificados:
+src/brams/memory grid_dims.f90 mem_scratch.f90 mem_scratch1_brams.f90 rams_mem_alloc.f90
+src/utils/lib filelist.F90
+src/brams/mksfc sst_read.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+Alvaro
+====================================================================
+29/04/2008 : Correcao de possivel invasao de area em RAMS_filelist - parte 2
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Gerou a definicao formal de uma quantidade maxima de arquivos a serem lidos.
+Gerou necessidade de se atualizar todos os arquivos que chamavam esta rotina.
+
+Arquivos modificados:
+src/brams/isan isan_coms.f90
+src/brams/fdda mem_oda.f90
+src/brams/cuparm mem_cuparm.f90
+src/brams/memory mem_varinit.f90
+build/bin depend_model.mk
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+Alvaro
+====================================================================
+30/04/2008 : Melhoria na robustez do codigo para compilacao com GFORTRAN.
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Declaracao explicita para arrays automaticos e argumentos.
+
+Arquivos modificados:
+src/utils/lib charutils.f90 dateutils.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km e malha 10x10.
+
+Alvaro
+====================================================================
+02/05/2008 : Sobrecarga de funcoes do modulo parlibf.F90
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Modificacao em parlibf.F90 para permitir compilacao em IFORT 10.1
+Implicou em Sobrecarga de funcoes do modulo.
+
+Arquivos modificados:
+src/utils/lib parlibf.F90
+/src/brams/core coriolis.f90
+src/brams/mpi ReadBcst.f90 mpass_cyclic.f90 mpass_feed.f90 mpass_lbc.f90 mpass_nest.f90 mpass_st.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+05/05/2008 : Mudanca de nome de diretorio: CORE/ para MODEL/
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Mudanca do nome do diretorio.
+Implicou, para o CVS, de adicionar o diretorio MODEL/ e seus respectivos
+arquivos e remover os arquivos do diretorio CORE/.
+O CVS nao permite remocao de diretorios. Assim, o ideal e' fazer
+"checkout" do repositorio da seguinte maneira:
+
+cvs checkout -P BRAMS-UNIFICADO
+
+Assim, diretorios vazios nao serao carregados na copia local.
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+05/05/2008 : Rotina "tkescl" (src/bram/turb/turb_ke.f90) declara argumento
+"epst" como INTENT(OUT) mas nao altera valor do dado.
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Sugestao de correcao do Vitorio:
+Preliminarmente deixei INTENT(INOUT) para a devida varivel.
+Aparentemente, futuramente o argumento pode ser retirada da rotina.
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+05/05/2008 : Definicao de escopo de variaveis de antiga area de COMMON
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Ampliacao de sugestao do Vitorio:
+11) In radcom the variable cdec is referenced undefined
+Antigo COMMON:
+common /radcom/ tdec,sdec,cdec,declin,rvr,rtr,dn0r,pird,prd,temprd,fthrl,dzmr,dztr,fthrs 
+Abrangencia de suas variaveis:
+tdec (escalar) - no usado (idem rams 6)
+sdec (escalar) - local em ZEN (idem rams 6)
+cdec (escalar) - calculado em ZEN, usado em RADCOMP (idem rams 6)
+declin (escalar) - local em ZEN (idem rams 6)
+rvr (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+rtr (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+dn0r (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+pird (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+prd (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+temprd (array, DIMENSION(nzpmax+1)) - local em RADCOMP (idem rams 6)
+fthrl (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+dzmr (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+dztr (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6)
+fthrs (array, DIMENSION(nzpmax)) - local em RADCOMP (idem rams 6) 
+
+A solucao para as variveis eh torna-las local apenas onde forem
+necessarias. A varivel "cdec" foi declarada localmente na
+subrotina RADIATE (driver), a qual chama RADPREP com mais este
+argumento, que por sua vez chama ZEN tambem com mais este argumento,
+onde o mesmo eh iniciado.
+Depois chama-se RADCOMP com "cdec" ja iniciado. 
+
+Arquivos modificados:
+src/brams/radiate rad_driv.f90
+
+Testes: esta correcao causa diferena no resultado com a versao anterior
+a partir de 12 horas de integracao.
+Apos modificar o mesmo arquivo na versao anterior (CVS 1) houve
+reprodutibilidade binaria verificada em relacao a versao anterior
+colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+05/05/2008 : Bug na subrotina "parf_unpack_char".
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Argumentos com INTENTs errados foi corrigido.
+Nao altera em nada o resultado pois nao eh chamada, mas necessita ser corrigida.
+
+Arquivos modificados:
+src/utils/lib parlibf.F90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Correcao de limite de indice em "cup_forcing_ens_16"
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: linha 1807: aclim1= acrit(kclim)*1.e3
+onde a varivel de indice chamada "kclim" podia apresentar valor zero (lembrando que o vetor "acrit" comea em 1).
+Solucao consiste em iniciar o valor de "kclim" com o nmero 1 (um) antes de se recalcular ou nao seu valor.
+
+Arquivos modificados:
+src/brams/cuparm/cup_grell2.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Eliminacao de subrotinas nao utilizadas: 
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Eliminacao de subrotinas para aninhamento movel ao longo da simulacao, 
+incluindo eliminacao de arrays desnecessarios em "mem_grid.f90".
+Eliminacao de subrotinas para Simulacao global em dois hemisferios.
+
+Arquivos modificados:
+brams/nesting/nest_move.f90
+brams/nesting/hemi2.f90
+src/brams/memory/mem_grid.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Alocacao dinamica de arrays estaticos            
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: 
+Alocacao dinamica de arrays (originalmente estaticos) em "mem_grid.f90" e
+"mem_scratch.f90" permitindo reducao de memoria. Implicou em chamadas a
+subrotinas de alocacao e desalocacao em "rams_mem_alloc.f90" e "rams_master.f90".
+
+Arquivos modificados:
+src/brams/memory/mem_grid.f90
+src/brams/memory/mem_scratch.f90
+src/brams/memory/rams_mem_alloc.f90
+src/brams/model/rams_master.f90
+build/bin/depend_model.mk
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Correcao em indices do array "nrz"   
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Correcao em "mksfc_driver.f90" no escopo de acao do array "nrz".
+
+Arquivos modificados:
+src/brams/mksfc/mksfc_driver.f90
+ 
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km. 
+
+Alvaro 
+==================================================================== 
+13/05/2008 : Alocacao dinamica de dados em "io_params.f90".
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Alocacao dinamica de dados em "io_params.f90". Implicou em mudancas em
+"sst_read.f90", "ndvi_read.f90", "rams_master.f90"
+
+Arquivos modificados:
+src/brams/io/io_params.f90
+src/brams/mksfc/ndvi_read.f90
+src/brams/mksfc/sst_read.f90
+src/brams/model/rams_master.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Correcao de chamada a subrotinas com dados alocados dinamicamente de node_mod
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Recebimento correto de bounds de argumentos:
+  integer, intent(out) :: ixb(nmachs,ngr)
+  integer, intent(out) :: ixe(nmachs,ngr)
+  integer, intent(out) :: iyb(nmachs,ngr)
+  integer, intent(out) :: iye(nmachs,ngr)
+
+Arquivos modificados:
+src/brams/mpi/para_init.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Correcao de saida de dados em "rname.f90"
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Comentadas linhas que nao se referem a variaveis que tem utilidade no
+codigo
+
+Arquivos modificados:
+src/brams/io io_params.f90/rname.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Alocacao modificada de arrays para economia de memoria em
+"rams_mem_alloc.f90" 
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Alocacao de: num_var, vtab_r, num_scalar e scalar_tab por (ngrids) e
+(maxsclr,ngrids)
+ 
+Arquivos modificados:
+src/brams/memory/rams_mem_alloc.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Correcao de comentarios referentes a bounds de arrays em "rnest_par.f90" 
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Arrumado o comentario sobre o bounds de variaveis usadas atraves de USE <module>,
+uma vez que tais variaveis foram alocadas dinamicamente de acordo com a quantidade
+de grids e de pontos corrente
+
+Arquivos modificados:
+src/brams/mpi/rnest_par.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Eliminacao de codigo em subrotinas nao chamadas
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Rotinas para saida de dados em STANDARDOUTPUT nao usadas
+Rotinas nao usadas em interp_lib.f90
+Rotinas nao usadas mas preparadas para recebimento de IVs adiantados
+Outras rotinas nao usadas 
+
+Arquivos modificados:
+src/brams/mksfc/sst_read.f90
+src/brams/model/rams_master.f90
+src/brams/io/rprnt.f90
+src/brams/mpi/par_decomp.f90
+src/utils/lib/interp_lib.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+13/05/2008 : Declaracao dinamica de arrays em "ref_sounding.f90".
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Arrays declarados como ALLOCATABLE em "ref_sounding.f90".
+Criacao de subrotinas para alocacao e desalocacao no modulo "ref_sounding.f90".
+Implicou em chamada a rotina de alocacao em "rams_master.f90". 
+
+Arquivos modificados:
+src/brams/model/rams_master.f90
+src/brams/model/ref_sounding.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+14/05/2008 : Inicializacao de variaveis
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Inicializacao dos arrays: DIMOVE, DJMOVE e NNACOUST para efeitos de
+reprodutibilidade binaria nos arquivos de cabecalho das saidas.
+
+Arquivos modificados:
+src/brams/memory/mem_grid.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+14/05/2008 : Script de execucao para Intel
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Problema detectado: Binario compilado com Intel apresenta problemas
+para execucao quando em um certo numero de processadores devido a
+estouro de pilha do S.O.
+Solucao: Criacao de um simples script que deve ser executado na linha
+do MPIRUN, o qual define o diretorio, define a pilha como ilimitada e
+chama o executavel.
+
+Exemplo de Script criado:
+
+cd /home/fazenda/BRAMS
+ulimit -s unlimited
+./brams-unificado-cvs-desenv.x
+
+Testes: Execucao com qualquer numero de processadores com binario 
+compilado com Intel.
+Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+14/05/2008 : Inicializacao de DTLONGN
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: O valor do array DTLONGN eh checado na subrotina "opspec3"
+sendo que ate este momento o mesmo nao foi sequer utilizado.
+Este mesmo problema pode ocorrer na versoa Mestre-Escravo.
+A solucao foi inicia-lo com 0 (zero) no momento de sua alocacao na
+subrotina "createMemGrid".
+
+Arquivos modificados:
+src/brams/memory/mem_grid.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Limpeza e remocao de codigo nao utilizado
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Comentadas as subrotinas nao utilizadas:
+1. grid_setup (substituidas todas as chamadas por gridSetup)
+2. make_sfcfiles  
+3. ndvi_read
+4. ndvi_file_inv
+5. ndvi_update
+6. sst_read
+7. sst_file_inv
+8. sst_update
+
+Arquivos modificados:
+src/brams/init rams_grid.f90 rdint.f90
+src/brams/mksfc mksfc_driver.f90 ndvi_read.f90 sst_read.f90
+src/brams/isan asgen.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Trocar nomes de variaveis scratchs
+Autor: Alvaro Luiz Fazenda
+ 
+Trabalho: Trocar nomes de scratchs: scr1, scr2, vt2da, vt2db (mem_mksfc.f90)
+por mksfc_scr1, mksfc_scr2, mksfc_vt2da, mksfc_vt2db para evitar confusoes
+com variaveis scratchs de mem_scratch
+
+Arquivos modificados:
+src/brams/mksfc mem_mksfc.f90 mksfc_driver.f90 mksfc_sst.f90 nest_geosst.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Remocao de duplicidade em checagem de arquivos de SST e
+NDVI na inicializacao
+Autor: Alvaro Luiz Fazenda
+ 
+Trabalho: Durante a inicializacao a checagem de arquivos de SST e NDVI
+era feita duas vezes sem necessidade. Isto foi modificado na rotina
+MakeSfcFiles().
+
+Arquivos modificados:
+src/brams/mksfc mksfc_driver.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Melhoria em legibilidade de codigo
+Autor: Alvaro Luiz Fazenda
+ 
+Trabalho: Melhoria em legibilidade de codigo em rams_master.f90
+
+Arquivos modificados:
+src/brams/model rams_master.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Remocao de codigo comentado em node_mod.f90
+Autor: Alvaro Luiz Fazenda
+ 
+Trabalho: Remocao de codigo comentado em node_mod.f90
+
+Arquivos modificados:
+src/brams/mpi node_mod.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Limpeza e remocao de codigo nao utilizado.
+Autor: Alvaro Luiz Fazenda
+
+Trabalho: Comentadas as subrotinas:
+1. varf_update (substituida por varfUpdate)
+2. varref (substituida por refVar)
+3. fldinit (substituida por fieldInit)
+4. fuso_read (substituida por FusoReadStoreOwnChunk)
+5. sfc_read (substituida por SfcReadStoreOwnChunk)
+6. top_read (substituida por TopReadStoreOwnChunk)
+7. geonest_nofile (substituida por geonestNofile)
+
+Arquivos modificados:
+src/brams/init rdint.f90 rinit.f90
+src/brams/fdda varf_read.f90 varf_update.f90
+src/brams/mksfc mksfc_fuso.f90 mksfc_sfc.f90 mksfc_top.f90 nest_geosst.f90
+src/brams/isan asgen.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+21/05/2008 : Legibilidade do codigo
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Comentario para lembranca de mexer futuramente na leitura de dados da
+radiacao CARMA no futuro em mem_globrad.f90
+
+Arquivos modificados:
+src/brams/radiate mem_globrad.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+23/05/2008 : Modo MAKEVFILE e MAKESFC
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Trava para permitir mode MAKEVFILE e MAKESFC apenas em rodada serial
+
+Arquivos modificados:
+src/brams/model rams_master.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+23/05/2008 : Alocacao da nova advecao
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Incluida dependecia de "machine_arq.o" em oneproc para habilitar alocacao
+de dados da nova adveccao apenas no caso de se utilizar o SX-6.
+
+Arquivos modificados:
+src/brams/model rams_master.f90
+build/bin depend_model.mk
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+23/05/2008 : Checagem de condicoes para MAKESFC e MAKEVFILE
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Checagem de condicoes para rodada das fases MAKESFC e MAKEVFILE apenas em
+modo serial movida da subrotina oneproc (rams_master.f90) para opspec1
+(opspec.f90)
+
+Arquivos modificados:
+src/brams/model rams_master.f90
+src/brams/io opspec.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+23/05/2008 : Mudanca de identificacao de versao
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+   de:   BRAMS Version 4.1
+   para: BRAMS Version 5.0
+
+Arquivos modificados:
+src/brams/memory grid_dims.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km.
+
+Alvaro
+====================================================================
+23/05/2008 : Fase MAKESFC funcionando
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Troca de subrotinas antigas por novas.
+Desativacao de trava que impedia execucao.
+
+Arquivos modificados:
+src/brams/mksfc mksfc_driver.f90
+src/brams/model rams_master.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKESFC.
+
+Alvaro
+====================================================================
+27/05/2008 : fase MAKEVFILE funcionando
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Desativacao de trava que impedia execucao.
+Alteracao de fonte de dados em GridSetup com a criacao de um novo
+modo de operacao para a mesma (num=3).
+
+Arquivos modificados:
+src/brams/init rams_grid.f90
+src/brams/isan asgen.f90
+src/brams/model/rams_master.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKEVFILE.
+
+Alvaro
+====================================================================
+27/05/2008 : Remocao de codigo comentado
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Remocao de codigo comentado e nao mais utilizado relacionado ao modo
+MAKESFC e MAKEVFILE
+
+Arquivos modificados:
+src/brams/init/rams_grid.f90
+src/brams/init/rdint.f90
+src/brams/isan/asgen.f90
+src/brams/mksfc/mksfc_driver.f90
+src/brams/mksfc/mksfc_sfc.f90
+src/brams/mksfc/mksfc_top.f90
+src/brams/mksfc/ndvi_read.f90
+src/brams/mksfc/sst_read.f90
+src/brams/model/rams_master.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKEVFILE.
+
+Alvaro
+====================================================================
+28/05/08 : Modo MAKESFC e MAKEVFILE funcionando com execucao paralela
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Remocao de trava que impedia execucao em modo paralelo quando fase
+MAKESFC ou MAKEVFILE era selecionada. Entretanto, o paralelismo nao
+eh utilizado, isto eh, a execucao eh em paralelo mas internamente apenas
+um processo executa a acao.
+Foi necessaria realocacao de dados.
+A fase MAKESFC eh executada sempre que necessaria, serialmente, mesmo
+quando se seleciona a fase INITIAL. Lembrando que apenas se necessaria,
+isto eh, quando falta algum arquivo de entrada da fase MAKESFC.
+
+Arquivos modificados:
+src/brams/model rams_master.f90
+src/brams/mpi ReadBcst.f90 para_init.f90
+src/brams/mksfc mksfc_driver.f90
+src/brams/io opspec.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKEVFILE.
+ 
+Alvaro
+====================================================================
+28/05/08 : Remocao de codigo nao utilizado, identacao de codigo
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Remocao de codigo nao mais utilizado e identacao de subrotinas para
+facilitar legibilidade do codigo.
+
+Arquivos modificados:
+src/brams/isan asgen.f90 asti.f90
+src/brams/mksfc mksfc_sst.f90 nest_geosst.f90
+src/utils/lib utils_f.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKEVFILE.
+  
+Alvaro 
+====================================================================
+28/Maio/2008: Escrita da saida do BRAMS no filesystem local dos nos
+Autor: Daniel Massaru
+
+Trabalho: Inclusao de  uma nova opcao no RAMSIN (IOUTPUT=3) para escrita da 
+          saida do BRAMS no filesystem local de cada no. Implementacao de uma 
+          subrotina que escreve a parcela dos campos resultantes de cada 
+          processador, em arquivos  binarios localizados no filesystem do no
+          a que o processador esta associado.
+
+Modificacoes:
+
+A variavel de namelist IOUTPUT foi redefinida na subrotina OutputFields 
+(src/brams/io/rio.f0). Se IOUTPUT=2, a escrita dos campos e feita usando o 
+esquema tradicional, via filesystem compartilhado. Caso contrário, se  
+IOUTPUT=3,  a escrita dos campos passa a ser feita nos filesystems locais 
+de cada um dos nos.
+
+O caminho (path) do filesystem local e definido pelo parametro lfsafilout, 
+na subrotina OpenNodeWrite. Por padrao, deixei lfsafilout="/tmp/massaru/".
+Os arquivos binarios gerados nos filesystems locais possuem o formato:
+
+p<pppp>-<nnnn>-A<YYYY>-<MM>-<DD>-<HHHHHH>-g<gg>.bin,
+
+onde:
+
+pppp - identificacao do processador
+nnnn - total de processadores
+YYYY - ano
+MM - mes
+DD - dia
+HHHHHH - horario da saida
+gg - grade
+
+Modulos modificados:
+src/brams/io/rio.f90 
+
+Testes: Reprodutibilidade binaria (para IOUTPUT=2) com a versao do CVS, 
+	no 10x10, no 20Km e no 10Km
+
+[]'s
+
+Massaru
+====================================================================
+05/06/08 : Exibicao de nomes de arquivos nao encontrados
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+De forma a facilitar a depuracao por parte do usuario das causas de
+falha em uma rodada, o nome do arquivo procurado e nao encontrado eh
+exibido no "stdout".
+
+Arquivos modificados:
+src/utils/lib getvar.f90
+src/brams/soil_moisture soil_moisture_init.f90
+src/brams/mksfc mksfc_fuso.f90 mksfc_ndvi.f90 mksfc_sfc.f90 mksfc_sst.f90 mksfc_top.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKESFC e MAKEVFILE.
+
+Alvaro
+====================================================================
+05/06/08 : Correcao de invasao de area fase MAKESFC
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Ocorria uma invasao de area na fase MAKESFC devido a ocorrencia de um
+codigo 100 na vegatacao o qual nao tinha corrlacao dentro do LEAF.
+A correcao exigiu investigacao na geracao dos dados de vegetacao, quando
+se notou que o indice 100 nao deveria ter ocorrido e sim o indice 10.
+Assim, mapeou-se, internamente no BRAMS, este indice para o equivalente
+ao indice 10.
+
+Arquivos modificados:
+src/brams/surface leaf3_init.f90
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKESFC e MAKEVFILE.
+
+Alvaro
+====================================================================
+03/07/2008 : Ativacao/Inicializacao do CATT
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Desabilitadas as travas para ativacao do CATT e da radiacao CARMA.
+Correcao de invasao de area em parametrizacao de cumulus do CATT.
+Inicializacao de fontes de queimadas na nova arquitetura (sem Mestre) com reprodutibilidade binaria.
+Correcao no Plumerise.
+Exigiu nova rotina para Broadcast de variavel Logica.
+Inicializacao da radiacao CARMA na nova arquitetura (sem Mestre).
+
+Arquivos modificados:
+src/brams/catt emission_source_map.f90 plumerise_vector.f90
+src/brams/init rdint.f90
+src/utils/lib parlibf.F90
+src/brams/radiate mem_globrad.f90 rad_carma.f90
+src/brams/cuparm cup_grell_catt_shallow.f90
+build/bin depend_model.mk
+
+Testes: Reprodutibilidade binaria verificada em relacao a versao anterior colocada em CVS para ate 24 horas de simulacao com 20km, incluindo a geracao de dados da fase MAKESFC e MAKEVFILE.
+
+Problemas ainda existentes detectados no RAMSIN do CATT operacional do CPTEC:
+Falha na reprodutibilidade binaria para NACOUST=2
+Problema na troca de mensagem com 100 processadores para malha em questão.
+
+Alvaro
+====================================================================
+24/10/2008 : Ativacao/Inicializacao do TEB-SPM e outros
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+1) Refactoring: rams_mem_alloc.f90, gaspart.f90, mem_gaspart.f90,
+   ozone.f90, rams_master.f90
+2) Correcao de invasao de area em rbnd.f90
+3) Ativacao de fontes de emissao no TEB.
+
+Arquivos modificados:
+src/brams/memory rams_mem_alloc.f90
+src/brams/teb-spm gaspart.f90 mem_gaspart.f90 ozone.f90
+src/brams/model rams_master.f90
+src/brams/bc rbnd.f90
+src/brams/init rdint.f90
+build/bin depend_model.mk
+
+Testes: Reprodutibilidade binaria. Reproduz qualitativamente os
+        resultados da versao 4.2.
+
+Alvaro
+====================================================================
+19/12/2008 : Teste do novo repositorio
+Autor: Alvaro Luiz Fazenda
+
+Configurado e-mail (15a tentativa).
+====================================================================
+26/01/2009 : Refactoring e eliminacao de codigo nao utilizado.
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+Refactoring e eliminacao de codigo nao utilizado
+Arquivos modificados:
+RAMS-UNIFICADO/src/utils/lib charutils.f90 numutils.f90 rsys.F90 therm_lib.f90 utils_f.f90
+
+Testes: Reprodutibilidade binaria para rodada operacional com 20km
+
+Alvaro
+====================================================================
+26/01/2009 : Inclusao de nova parametrizacao Cumulus
+Autor: Alvaro Luiz Fazenda
+
+Trabalho:
+a)Inclusao de nova parametrizacao Cumulus vinda do CATT mas usada sem
+  ativacao do CATT.
+a.1) Exigiu novas alocacoes
+a.2) Novos valores possiveis no RAMSIN
+a.3) Nova forma de chama no TIMESTEP
+
+b) Correcao de radiacao CARMA
+b.1) Mudancas em passagens de argumentos para "assumed Shape" dentro de
+     modulo
+b.2) Criacao de modulo "RADIATION" e encapsulamento de diversas rotinas
+     referentes a radiacao
+
+c) Refactoring do codigo
+
+d) Remocao de codigo nao utilizado
+
+e) Substituicoes de rotinas para atribuicoes por sequencias de comandos em
+   Fortran-90 e rotinas com argumento inteiro longo para quantidade de ele-
+   mentos dos arrays
+
+Arquivos modificados:
+BRAMS-UNIFICADO/src/brams/catt extra.f90
+BRAMS-UNIFICADO/src/brams/surface leaf3.f90
+BRAMS-UNIFICADO/src/brams/micro mic_nuc.f90 mic_tabs.f90
+BRAMS-UNIFICADO/src/brams/mpi mpass_cyclic.f90 mpass_nest.f90
+BRAMS-UNIFICADO/src/brams/nesting mem_nestb.f90 nest_feed.f90
+BRAMS-UNIFICADO/src/brams/bc rbnd.f90
+BRAMS-UNIFICADO/src/brams/fdda cond_update.f90 nud_update.f90
+BRAMS-UNIFICADO/src/brams/init rams_grid.f90 rdint.f90
+BRAMS-UNIFICADO/src/brams/isan aobj.f90 astp.f90 first_rams.f90
+BRAMS-UNIFICADO/src/brams/turb diffuse.f90 mem_opt_scratch.f90 mem_turb.f90
+                                           turb_diff.f90 turb_k.f90 turb_ke.f90
+BRAMS-UNIFICADO/src/brams/mksfc geodat.f90 mksfc_ndvi.f90 mksfc_sst.f90
+                                nest_geosst.f90
+BRAMS-UNIFICADO/src/brams/io history_start.f90 inithis.f90 opspec.f90 
+                             ranlavg.f90 recycle.f90 rio.f90
+BRAMS-UNIFICADO/src/brams/radiate mem_carma.f90 rad_carma.f90 rad_ccmp.f90
+                                  rad_driv.f90
+BRAMS-UNIFICADO/src/brams/cuparm cup_grell_catt_deep.f90 extras_rconv_grell_catt.f90
+                                 mem_cuparm.f90 mem_grell.f90 mem_grell_param2.f90
+                                 rconv.f90 rconv_grell.f90 rconv_grell_catt.f90
+                                 rshcupar.f90
+BRAMS-UNIFICADO/src/brams/model raco.f90 raco_adap.f90 radvc.f90 rams_master.f90
+                                rtimh.f90 rtimi.f90
+BRAMS-UNIFICADO/src/brams/memory mem_scratch.f90 rams_mem_alloc.f90
+
+Testes: Reprodutibilidade binaria para rodada operacional com 20km
+ 
+Alvaro
+====================================================================
+
+28/05/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+
+Observacoes: 
+
+- Para verificar as modificacoes do CCATT no codigo original do BRAMS 5.0, procure pela string "DMK-CCATT". 
+
+  P. ex: grep -riw "DMK-CCATT" src/brams/
+  
+- Tambem foram feitas modificacoes no codigo original do CCATT para se adequar a estrutura do BRAMS
+5.0. Para localizar estas modificacoes, procure pela string "BRAMS-5.0" no subdir. ccatt em
+src/brams. 
+
+1) Insercao dos modulos de inicializacao (alocacao, leitura de namelist, leitura de fontes). 
+
+Codigo de leitura de fontes do CCATT-BRAMS foi modificado para se adequar a nova estrutura do BRAMS 5. Processador 0 abre arquivo VFM,  le o campo de emissao e armazena dados do dominio completo em uma variavel scratch. Em seguida, e feito broadcast dos dados armazenados e cada processador extrai e guarda a sua parte do campo. 
+
+Arquivos inseridos:
+brams/ccatt/chem_sources.f90
+brams/ccatt/ccatt_start.f90 (novo, incluido no CCATT)
+brams/ccatt/ccatt_extra.f90 (novo, incluido no CCATT)
+brams/ccatt/mem_aer1.f90
+brams/ccatt/mem_chem1.f90
+brams/ccatt/mem_chem1aq.f90
+brams/ccatt/mem_chemic.f90
+brams/ccatt/mem_plume_chem1.f90
+brams/ccatt/aer1_list.f90
+brams/ccatt/<CHEM>/chem1_list.f90
+brams/ccatt/<CHEM>/chem1aq_list.f90
+
+Onde <CHEM> = CB07_TUV, CB07_LUT, RACM_TUV, RELACS ou RELACS_TUV.
+
+Arquivos modificados:
+brams/ccatt/chem_sources.f90
+brams/init/ModNamelistFile.f90
+brams/memory/mem_varinit.f90
+brams/memory/rams_mem_alloc.f90
+brams/model/rams_master.f90
+brams/bc/rbnd.f90
+brams/io/io_params.f90
+brams/io/opspec.f90
+brams/io/rcio.f90
+
+2) Leitura de namelist e padronizacao do codigo do CCATT para acoplamento no BRAMS 5.0.
+
+Modulos do ccatt foram modificados para suportar novo esquema implementado no BRAMS 5 que possibilita leitura de namelist com uso de tipos (type namelistFile). Tambem foram feitas modificacoes minimas no esquema de preenchimento da VarTables, seguindo esquema adotado pelo BRAMS 5.0. Foram removidas/substituidas todas as chamadas as funcoes/subrotinas do CCATT que estao absoletas no BRAMS 5.0 (p. ex. azero, azero2, etc.).
+
+Arquivos modificados:
+brams/ccatt/mem_chem1aq.f90
+brams/ccatt/mem_volc_chem1.f90
+brams/ccatt/mem_aer1.f90
+brams/ccatt/mem_chem1.f90
+brams/ccatt/mem_plume_chem1.f90
+brams/ccatt/mem_chem1aq.f90
+brams/ccatt/ccatt_extra.f90
+brams/stilt/mem_stilt.f90
+brams/stilt/rexev.f90
+brams/stilt/rstilt.f90
+
+Arquivo RAMSIN foi modificado. Secao CATT_INFO foi substituida pela secao CCATT_INFO que apresenta todas as opcoes
+de namelist usadas pelo CCATT.
+
+3) Modificacao nos modulos da leitura de varfiles e nudge analysis para assimilacao de dados do ccatt.
+
+Segue esquema similar ao adotado pela leitura de fontes (veja secao 1).
+
+Arquivos modificados:
+brams/fdda/varf_update.f90
+brams/fdda/nud_update.f90
+brams/fdda/nud_read.f90
+brams/fdda/nud_analysis.f90
+brams/fdda/varf_update.f90
+
+4) Atualizacao dos arquivos de Makefile do BRAMS 5.0 para a compilacao dos modulos do CCATT e insercao do parametro "CHEM" para a escolha do mecanismo quimico. 
+
+Arquivos modificados:
+build/bin/Make_model
+build/bin/depend_model.mk
+build/bin/objects_model.mk
+build/bin/depend_utils.mk
+build/bin/objects_utils.mk 
+build/bin/paths.mk
+
+Arquivos inseridos:
+utils/include/spConfig.h
+utils/include/spDefs.h
+utils/include/spmatrix.h
+utils/lib/spAllocate.c
+utils/lib/spBuild.c
+utils/lib/spFactor.c
+utils/lib/spFortran.c
+utils/lib/spOutput.c
+utils/lib/spSolve.c
+utils/lib/spTest.c
+utils/lib/spUtils.c
+
+Compilacao do BRAMS 5.0 passa a seguir esquema equivalente ao CCATT-BRAMS 4.3.3:
+
+P. ex:
+make -f Make_model OPT=op.intel CHEM=CB07_TUV
+
+5) Insercao do modulo STILT:
+
+Arquivos inseridos
+brams/stilt/mem_stilt.f90
+brams/stilt/rexev.f90
+brams/stilt/rstilt.f90
+brams/stilt/tkenn_completa.f90
+brams/stilt/tkenn.f90
+brams/turb_constants.f90
+
+Arquivos modificados:
+brams/turb/mem_turb.f90
+brams/turb/turb_k.f90
+brams/turb/turb_diff.f90
+brams/cuparm/rconv_grell_catt.f90
+brams/model/rtimh.f90
+
+Necessario checar funcionamento.
+
+6) Insercao do modulo da emissao de fontes:
+
+Arquivos inseridos:
+brams/ccatt/ChemSourcesDriver.f90
+brams/ccatt/chem_plumerise_scalar.f90
+
+Arquivos modificados:
+brams/model/rtimh.f90
+
+7) Insercao do modulo da deposicao seca:
+
+Arquivos inseridos:
+brams/ccatt/<CHEM>/chem_dry_dep.f90
+brams/ccatt/<CHEM>/ChemDryDepDriver.f90
+
+Onde <CHEM> = CB07_TUV, CB07_LUT, RACM_TUV, RELACS ou RELACS_TUV.
+
+Arquivos modificados:
+brams/model/radvc.f90
+brams/model/rams_master.f90
+brams/model/rtimh.f90
+
+8) Inicializacao por HISTORY
+
+Realizada adaptacoes do CCATT na inicializacao por history, INITIAL=3 no RAMSIN (subrotina inithis(), chamada  a partir de InitOneProc(), em rams_master.f90)
+
+Arquivos modificados:
+brams/io/inithis.f90
+
+Obs.: esta modificacao ainda nao foi validada. Necessario verificar dimensoes nxp, nyp e nzp equivalentes no BRAMS 5.0 para os campos do array chem1_g
+
+9) Modificacao na microfisica:
+
+Efetuadas correcoes do RAMS 6 para o CCATT, inclusao Carrio (2012).
+
+Arquivos modificados:
+brams/micro/mem_micro.f90
+brams/micro/mem_micro_optij.f90
+brams/micro/mic_init.f90
+brams/micro/micphys.f90
+brams/micro/mic_misc.f90
+brams/micro/mic_nuc.f90
+brams/micro/mic_driv.f90
+brams/micro/mic_driv_new.f90
+brams/micro/mic_coll.f90
+
+10) Modificacao em trsets()
+
+Correcoes do RAMS 6 e insercao do CCATT.
+
+Arquivos modificados:
+brams/bc/rbnd.f90
+
+11) Modificacao em sfcopqr()
+
+Correcoes do RAMS 6, somente.
+
+Arquivos modificados:
+brams/mksfc/geodat.f90
+
+12) Insercao da TUV
+
+Modulo mem_globrad foi adaptado para leitura de caseW, calculo e broadcast do array caseW_tuv. Ainda e importante verificar a necessidade do broadcast de caseW_tuv.
+
+Alocacao dos campos de fast_JX_g foram redimensionados para nodemxp, nodemyp, nodemzp, seguindo esquema adotado no BRAMS 5.0 (trocar mmxp, mmyp, mmzp por nodemxp, nodemyp e nodemzp, respectivamente.
+
+Arquivos modificados:
+brams/radiate/mem_globrad.f90
+brams/ccatt/TUV/ModTuvDriver2.7.f90
+
+Arquivos inseridos:
+brams/ccatt/TUV/mem_tuv.f90
+brams/ccatt/TUV/ModTuv2.7.f90
+brams/ccatt/TUV/ModTuvDriver2.7.f90
+brams/ccatt/TUV/tuvParameter.f90
+
+Necessario checar funcionamento, chamada da TUV ainda nao foi ativada.
+
+13) Insercao dos modulos das reacoes quimicas:
+
+Arquivos inseridos:
+brams/ccatt/chem_spack_utils.f90
+brams/ccatt/mem_spack.f90
+brams/ccatt/chem_spack_solve_sparse.f90
+brams/ccatt/chem_spack_lu.f90
+brams/ccatt/chem_spack_ros.f90
+brams/ccatt/chem_spack_ros_dyndt.f90
+brams/ccatt/chem_spack_rodas3_dyndt.f90
+brams/ccatt/chem_spack_qssa.f90
+brams/ccatt/chem_trans_liq.f90
+brams/ccatt/chem_orage.f90
+brams/ccatt/chemistry.f90
+brams/ccatt/<CHEM>/chem_spack_jacdchemdc.f90
+brams/ccatt/<CHEM>/chem_spack_dratedc.f90
+brams/ccatt/<CHEM>/chem_spack_kinetic.f90
+brams/ccatt/<CHEM>/chem_spack_fexprod.f90
+brams/ccatt/<CHEM>/chem_spack_fexloss.f90
+brams/ccatt/<CHEM>/chem_spack_rates.f90
+brams/ccatt/<CHEM>/chem_spack_fexchem.f90
+brams/ccatt/<CHEM>/chem_trans_gasaq.f90
+brams/ccatt/<CHEM>/chem_uv_att.f90
+
+Onde <CHEM> = CB07_TUV, CB07_LUT, RACM_TUV, RELACS ou RELACS_TUV.
+
+Arquivos modificados:
+brams/ccatt/chem_spack_utils.f90
+brams/ccatt/chemistry.f90
+brams/model/rtimh.f90
+
+removida todas as referencias a mibcon em chemistry_driver() e AllocIndex(). Parametro nao existe mais na versao 5.0 e, alem disto, ibcon nao e usado em nenhuma destas subrotinas.
+maxgrds substituido por ngrids em chemistry_driver(). Parametro maxgrds nao existe no BRAMS 5.0.
+mmxp, mmyp e mmzp substituidos por nodemxp, nodemyp e nodemzp em chemistry_driver()
+mia, miz, mja, mjz substituidos por nodeia, nodeiz, nodeja, nodejz em chemistry_driver()
+removidos mi0 e mj0 nao usados em chemistry_driver().
+
+14) Insercao da funcao julday no modulo dateutils
+
+Funcao transferida do CCATT-BRAMS 4.3.3 para BRAMS 5.0. Funcao julday() e necessaria em ModTuvDriver2.7.f90
+
+Arquivos modificados:
+utils/lib/dateutils.f90
+
+15) Insercao dos modulos do CHEMISTRY ISAN (ISentropic Analysis).
+
+Arquivos inseridos:
+brams/isan_chem/chem_aobj.f90   
+brams/isan_chem/chem_asti.f90   
+brams/isan_chem/chem_file_inv.f90         
+brams/isan_chem/chem_isan_coms.f90  
+brams/isan_chem/chem_refstate.f90
+brams/isan_chem/chem_asgen.f90  
+brams/isan_chem/chem_astp.f90   
+brams/isan_chem/chem_first_rams.f90       
+brams/isan_chem/chem_isan_io.f90    
+brams/isan_chem/chem_v_interps.f90
+brams/isan_chem/chem_asti2.f90  
+brams/isan_chem/chem_avarf.f90  
+brams/isan_chem/chem_first_rams.f90_last  
+brams/isan_chem/chem_isan_name.f90
+
+Arquivos modificados:
+brams/model/rams_master.f90
+
+Obs.: o codigo do ISAN parece ter sido reestruturado (ou refatorado) na nova versao 5.0. Pode ser necessario modificar o codigo do CHEM ISAN para preservar as modificacoes impostas no BRAMS 5.0, ou repassar as insercoes do CCATT no ISAN do BRAMS 5.0. Este trabalho sera feito em momento oportuno. Por enquanto, a chamada ao driver do CHEM ISAN esta desativada em rams_master.  Ainda nao foram realizados testes para verificar se o CHEM ISAN inserido funciona no BRAMS 5.0.
+
+16) Correcao na turbulencia
+
+Alteracao do indice k no calculo de tkep (veja funcao tkeinit()). 
+
+Indice k=1, 3; ao inv? de k=1, 2. 
+
+Modificacao corrige parcialmente o problema de reprodutibilidade do campo tke (turb kinetic energy)
+
+Arquivos modificados:
+brams/turb/turb_ke.f90
+
+17) Testes: 
+
+Estao sendo realizados testes baseados no testcase light (CHEM_RAMSIN_LIGHT, 1 grade, mecanismo CB07_TUV). Os testes estao sendo conduzidos no supercomputador Tupa, no cluster Araguaia e em um PC (quad core) com Ubuntu Linux instalado. O RAMSPOST integrado no modelo ainda nao foi adaptado para pos processar os campos do CCATT e, portanto, o pos-processamento esta sendo feito a partir de uma versao standalone do CHEM-RAMSPOST.
+
+Resultados parciais dos testes realizados ate o momento:
+
+- Codigo compila com Intel Fortran e modelo executa com quaisquer numero de processadores no cluster Araguaia;
+- Assimilacao de dados apresenta resultados coerentes, campos de emissao lidos no CCATT-BRAMS 5.0 reproduzem os campos lidos no CCATT-BRAMS 4.3.3;
+- Codigo compila com PGI no Tupa, mas execucao do modelo cai no timestep 8 com falha de segmentacao. O motivo ainda e desconhecido;
+- Codigo compila com Intel no PC, mas modelo cai logo apos a inicializacao utilizando 8 processadores. O modelo executa normalmente com outras variacoes de numero de processadores e produz resultados coerentes;
+- Ativacao das opcoes de deteccao de invasao de area nao aponta problemas no codigo usando tanto PGI quanto Intel Compiler;
+- Modulos da Emissao de fontes, plumerise, deposicao seca e reacoes quimicas estao inseridos no BRAMS 5, compilador nao aponta problemas, mas resultados da execucao do modelo ainda nao foram validados.
+- Discrepancia nos campos oxido de nitrogenio (NO) e dioxido de nitrogenio (NO2) na comparacao entre BRAMS 5.0 e o CCATT-BRAMS 4.3.3. O motivo ainda e desconhecido.
+- A correcao citada no item 16 reduziu as diferencas encontrada no campo tke (turb kinetic energy) entre os dois modelos, mas a discrepancia ainda existe e o motivo esta sendo investigado.
+
+
+====================================================================
+
+15/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho: 
+Correcao de invasao de area na turbulencia Nakanishi. Alocacao do array turb_g(ngrid)%kpbl a partir de mem_turb.
+
+Arquivos modificados:
+
+brams/turb/mem_turb.f90
+
+====================================================================
+
+18/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho: 
+Insercao da chadada a InitTuv() antes da chamada a rams_mem_alloc() em OneProc().
+
+Arquivos modificados:
+brams/memory/rams_mem_alloc.f90
+brams/model/rams_master.f90
+build/bin/depend_model.mk
+
+
+====================================================================
+
+19/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho: 
+Correcao na emissao de fontes. Chamada da emissao de fontes a partir de
+Timestep()
+
+Arquivos modificados:
+brams/model/rtimh.f90
+
+====================================================================
+
+20/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho: 
+Correcao na turbulencia
+Nullify e Dealloc do array turb%kpbl
+
+Arquivos modificados:
+brams/turb/mem_turb.f90
+
+====================================================================
+
+21/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho: 
+Correcao na umidade do solo
+Ajuste de parametros na inicializacao do leaf3
+
+
+Arquivos modificados:
+brams/surface/leaf3_init.f90
+
+====================================================================
+25/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao na umidade do solo
+Insercao da chamada a rotina change_soil_moisture_init() em GeoNestNoFile().
+Insercao corrige problema de reprodutibilidade do campo smoist2.
+
+
+Arquivos modificados:
+brams/mksfc/nest_geosst.f90
+brams/surface/ruser.f90
+
+====================================================================
+26/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Adaptacao do ISAN CHEM no BRAMS 5.0. 
+
+Arquivos modificados:
+brams/isan_chem/chem_aobj.f90 (copia do ISAN do BRAMS 5.0)
+brams/isan_chem/chem_asgen.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_asti2.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_asti.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_astp.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_avarf.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_file_inv.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_first_rams.f90 (copia do ISAN do BRAMS 5.0)
+brams/isan_chem/chem_isan_coms.f90 (copia do CCATT-BRAMS-4.3.3)
+brams/isan_chem/chem_isan_io.f90 (copia do ISAN do BRAMS 5.0)
+brams/isan_chem/chem_refstate.f90 (quimica inserida no ISAN do BRAMS 5.0)
+brams/isan_chem/chem_v_interps.f90 (copia do ISAN do BRAMS 5.0)
+brams/model/rams_master.f90
+
+
+====================================================================
+26/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Insercao das rotinas aer_background() e initial_condition(), ambas definidas em
+chemistry.f90
+
+Arquivos modificados:
+brams/ccatt/chemistry.f90
+brams/model/rams_master.f90
+
+====================================================================
+26/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Adaptacao no Grell.
+
+Arquivos modificados:
+brams/cuparm/cup_grell_catt_deep.f90
+brams/cuparm/mem_grell.f90
+brams/cuparm/rconv_grell_catt.f90
+
+====================================================================
+27/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Inicializacao da deposicao seca. Insercao da rotina dep_init() em InitFields().
+
+Arquivos modificados:
+brams/model/rnode.f90
+
+====================================================================
+27/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao na chamada a rconv_grell_catt(). Chamada apenas se ccatt=1.
+
+Arquivos modificados:
+brams/model/rtimh.f90
+
+====================================================================
+28/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao na rotina sfcinit_file_user. Troca referencias CATT por CCATT.
+
+Arquivos modificados:
+brams/surface/ruser.f90
+
+====================================================================
+29/06/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Chamada a dep_init() alterado de InitFields() para InitOneProc()
+
+Arquivos modificados:
+brams/model/rnode.f90
+brams/model/rams_master.f90
+
+====================================================================
+01/07/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao no leaf3, canopy(). Troca referencias CATT por CCATT
+
+Arquivos modificados:
+brams/surface/leaf3.f90
+
+====================================================================
+01/07/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao na radiacao carma.
+
+Arquivos modificados:
+brams/radiate/rad_driv.f90
+brams/radiate/rad_carma.f90
+brams/radiate/mem_globrad.f90
+brams/radiate/mem_carma.f90
+bram/model/rams_master.f90 (remove chamada a master_read_carma_data())
+
+====================================================================
+01/07/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Insercao da leitura de fontes no HISTORY
+
+Arquivos modificados:
+brams/model/rams_master.f90.
+====================================================================
+05/07/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao da reprodutibilidade do campo PM25. Modificacao na subrotina
+mxdefm_tracer()
+
+Arquivos modificados:
+brams/model/turb/turb_k.f90
+
+====================================================================
+05/07/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Leitura diaria da emissao de fontes. Insercao da leitura de fontes em OneProc()
+e ajuste do tempo de leitura do arquivo de emissao em comm_time()
+
+Arquivos modificados:
+brams/model/rams_master.f90
+
+Obs: NAO ESTA FUNCIONANDO. NECESSITA DE REVISAO APOS AS FERIAS!
+
+====================================================================
+30/07/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao na deposicao seca RELACS_TUV. Funcao julday() passa a ser chamada a partir do modulo
+ModDateUtils. Funcao rs() removida do modulo mod_therm_lib.
+
+Arquivos modificados:
+brams/ccatt/RELACS_TUV/chem_dry_dep.f90
+brams/ccatt/RELACS_TUV/ChemDryDepDriver.f90
+
+====================================================================
+06/08/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Migracao do BRAMS 5.0 (tag) para BRAMS 5.0 (trunk).
+
+Arquivos novos:
+src/utils/include: spConfig.h
+src/utils/include: spDefs.h
+src/utils/include: spmatrix.h
+src/utils/lib: spAllocate.c
+src/utils/lib: spBuild.c
+src/utils/lib: spFactor.c
+src/utils/lib: spFortran.c
+src/utils/lib: spOutput.c
+src/utils/lib: spSolve.c
+src/utils/lib: spTest.c
+src/utils/lib: spUtils.c
+src/brams/isan_chem/
+src/brams/isan_chem/chem_aobj.f90
+src/brams/isan_chem/chem_asti2.f90
+src/brams/isan_chem/chem_astp.f90
+src/brams/isan_chem/chem_file_inv.f90
+src/brams/isan_chem/chem_isan_coms.f90
+src/brams/isan_chem/chem_refstate.f90
+src/brams/isan_chem/chem_asgen.f90
+src/brams/isan_chem/chem_asti.f90
+src/brams/isan_chem/chem_avarf.f90
+src/brams/isan_chem/chem_first_rams.f90
+src/brams/isan_chem/chem_isan_io.f90
+src/brams/isan_chem/chem_v_interps.f90
+src/brams/ccatt/
+src/brams/ccatt/aer1_list.f90
+src/brams/ccatt/chem_fastjx_data.f90
+src/brams/ccatt/chem_sources.f90
+src/brams/ccatt/chem_spack_utils.f90
+src/brams/ccatt/mem_plume_chem1.f90
+src/brams/ccatt/carma_fastjx.f90
+src/brams/ccatt/chem_fastjx_driv.f90
+src/brams/ccatt/chem_spack_lu.f90
+src/brams/ccatt/chem_trans_liq.f90
+src/brams/ccatt/mem_spack.f90
+src/brams/ccatt/ccatt_extra.f90
+src/brams/ccatt/chemistry.f90
+src/brams/ccatt/chem_spack_qssa.f90
+src/brams/ccatt/chem_uv_att.f90
+src/brams/ccatt/mem_tconv.f90
+src/brams/ccatt/ccatt_start.f90
+src/brams/ccatt/chem_orage.f90
+src/brams/ccatt/chem_spack_rodas3_dyndt.f90
+src/brams/ccatt/mem_aer1.f90
+src/brams/ccatt/mem_volc_chem1.f90
+src/brams/ccatt/ChemConvTranspDriver.f90
+src/brams/ccatt/chem_plumerise_scalar.f90
+src/brams/ccatt/chem_spack_ros_dyndt.f90
+src/brams/ccatt/mem_chem1aq.f90
+src/brams/ccatt/chem_conv_transp.f90
+src/brams/ccatt/chem_plumerise_vector.f90
+src/brams/ccatt/chem_spack_ros.f90
+src/brams/ccatt/mem_chem1.f90
+src/brams/ccatt/chem_fastjx57.f90
+src/brams/ccatt/ChemSourcesDriver.f90
+src/brams/ccatt/chem_spack_solve_sparse.f90
+src/brams/ccatt/mem_chemic.f90
+src/brams/ccatt/CB07_LUT/
+src/brams/ccatt/CB07_LUT/chem1aq_list.f90
+src/brams/ccatt/CB07_LUT/chem_dry_dep.f90
+src/brams/ccatt/CB07_LUT/chem_spack_fexloss.f90
+src/brams/ccatt/CB07_LUT/chem_spack_kinetic.f90
+src/brams/ccatt/CB07_LUT/chem1_list.f90
+src/brams/ccatt/CB07_LUT/chem_spack_dratedc.f90
+src/brams/ccatt/CB07_LUT/chem_spack_fexprod.f90
+src/brams/ccatt/CB07_LUT/chem_spack_rates.f90
+src/brams/ccatt/CB07_LUT/ChemDryDepDriver.f90
+src/brams/ccatt/CB07_LUT/chem_spack_fexchem.f90
+src/brams/ccatt/CB07_LUT/chem_spack_jacdchemdc.f90
+src/brams/ccatt/CB07_LUT/chem_trans_gasaq.f90
+src/brams/ccatt/CB07_TUV/
+src/brams/ccatt/CB07_TUV/chem1aq_list.f90
+src/brams/ccatt/CB07_TUV/chem_dry_dep.f90
+src/brams/ccatt/CB07_TUV/chem_spack_fexloss.f90
+src/brams/ccatt/CB07_TUV/chem_spack_kinetic.f90
+src/brams/ccatt/CB07_TUV/chem1_list.f90
+src/brams/ccatt/CB07_TUV/chem_spack_dratedc.f90
+src/brams/ccatt/CB07_TUV/chem_spack_fexprod.f90
+src/brams/ccatt/CB07_TUV/chem_spack_rates.f90
+src/brams/ccatt/CB07_TUV/ChemDryDepDriver.f90
+src/brams/ccatt/CB07_TUV/chem_spack_fexchem.f90
+src/brams/ccatt/CB07_TUV/chem_spack_jacdchemdc.f90
+src/brams/ccatt/CB07_TUV/chem_trans_gasaq.f90
+src/brams/ccatt/RACM_TUV/
+src/brams/ccatt/RACM_TUV/chem1aq_list.f90
+src/brams/ccatt/RACM_TUV/chem_dry_dep.f90
+src/brams/ccatt/RACM_TUV/chem_spack_fexloss.f90
+src/brams/ccatt/RACM_TUV/chem_spack_kinetic.f90
+src/brams/ccatt/RACM_TUV/chem1_list.f90
+src/brams/ccatt/RACM_TUV/chem_spack_dratedc.f90
+src/brams/ccatt/RACM_TUV/chem_spack_fexprod.f90
+src/brams/ccatt/RACM_TUV/chem_spack_rates.f90
+src/brams/ccatt/RACM_TUV/ChemDryDepDriver.f90
+src/brams/ccatt/RACM_TUV/chem_spack_fexchem.f90
+src/brams/ccatt/RACM_TUV/chem_spack_jacdchemdc.f90
+src/brams/ccatt/RACM_TUV/chem_trans_gasaq.f90
+src/brams/ccatt/RELACS/
+src/brams/ccatt/RELACS/chem1aq_list.f90
+src/brams/ccatt/RELACS/chem_dry_dep.f90
+src/brams/ccatt/RELACS/chem_spack_fexloss.f90
+src/brams/ccatt/RELACS/chem_spack_kinetic.f90
+src/brams/ccatt/RELACS/chem1_list.f90
+src/brams/ccatt/RELACS/chem_spack_dratedc.f90
+src/brams/ccatt/RELACS/chem_spack_fexprod.f90
+src/brams/ccatt/RELACS/chem_spack_rates.f90
+src/brams/ccatt/RELACS/ChemDryDepDriver.f90
+src/brams/ccatt/RELACS/chem_spack_fexchem.f90
+src/brams/ccatt/RELACS/chem_spack_jacdchemdc.f90
+src/brams/ccatt/RELACS/chem_trans_gasaq.f90
+src/brams/ccatt/RELACS_TUV/chem1aq_list.f90
+src/brams/ccatt/RELACS_TUV/chem_dry_dep.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_fexloss.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_kinetic.f90
+src/brams/ccatt/RELACS_TUV/chem1_list.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_dratedc.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_fexprod.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_rates.f90
+src/brams/ccatt/RELACS_TUV/ChemDryDepDriver.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_fexchem.f90
+src/brams/ccatt/RELACS_TUV/chem_spack_jacdchemdc.f90
+src/brams/ccatt/RELACS_TUV/chem_trans_gasaq.f90
+src/brams/ccatt/TUV/
+src/brams/ccatt/TUV/mem_tuv.f90
+src/brams/ccatt/TUV/ModTuv2.7.f90
+src/brams/ccatt/TUV/ModTuvDriver2.7.f90
+src/brams/ccatt/TUV/tuvParameter.f90
+CHEMRAMSIN_Minimo
+
+Arquivos modificados:
+src/brams/bc/rbnd.f90
+src/brams/catt/emission_source_map.f90
+src/brams/cuparm/cup_grell_catt_deep.f90
+src/brams/cuparm/rconv_grell_catt.f90
+src/brams/fdda/nud_analysis.f90
+src/brams/fdda/nud_read.f90
+src/brams/fdda/nud_update.f90
+src/brams/fdda/varf_read.f90
+src/brams/fdda/varf_update.f90
+src/brams/init/ModNamelistFile.f90
+src/brams/io/inithis.f90
+src/brams/io/io_params.f90
+src/brams/io/opspec.f90
+src/brams/memory/alloc.f90
+src/brams/memory/mem_varinit.f90
+src/brams/memory/rams_mem_alloc.f90
+src/brams/micro/mic_driv.f90
+src/brams/micro/mic_driv_new.f90
+src/brams/mksfc/geodat.f90
+src/brams/mksfc/nest_geosst.f90
+src/brams/model/radvc.f90
+src/brams/model/rams_master.f90
+src/brams/model/rnode.f90
+src/brams/model/rtimh.f90
+src/brams/mpi/para_init.f90
+src/brams/radiate/mem_carma.f90
+src/brams/radiate/mem_globrad.f90
+src/brams/radiate/rad_carma.f90
+src/brams/radiate/rad_driv.f90
+src/brams/surface/leaf3.f90
+src/brams/surface/leaf3_init.f90
+src/brams/surface/ruser.f90
+src/brams/turb/turb_k.f90
+src/utils/lib/dateutils.f90
+build/bin/depend_model.mk
+build/bin/depend_utils.mk
+build/bin/include.mk.opt.intel
+build/bin/Make_model
+build/bin/objects_model.mk
+build/bin/objects_utils.mk
+build/bin/paths.mk
+HISTORICO
+
+====================================================================
+07/08/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcoes radiacao carma. Correcoes RAMS 6.0, correcoes do Nilton.
+
+Arquivos modificados:
+brams/radiate/rad_driv.f90
+brams/radiate/rad_carma.f90
+
+====================================================================
+08/08/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao no tempo de leitura diaria do arquivo de emissao.
+
+Arquivos modificados:
+brams/model/rams_master.f90
+
+====================================================================
+10/09/2012: Migracao do CCATT para BRAMS 5.0
+Autor: Daniel Massaru
+
+Trabalho:
+Correcao de bug que produz discrepancia no campo ozonio a partir da 8h. Inicializacao de variaveis locais no driver da FastTUV.
+
+Arquivos modificados:
+brams/ccatt/TUV/ModTuvDriver2.7.f90
+
+====================================================================
+10/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: reportar status atual do desenvolvimento
+
+Modelo compila e roda com sucesso por 24h. (testcase light, 1 grade, mecanismo CB07 LUT e CB07 TUV, compilador intel e pgi) em PCs e no cluster araguaia.
+
+No supercomputador Tupa, eh necessario usar o compilador PGI Fortran e compilar o codigo no noh interno (login1, login2, etc..). Para executar o modelo eh importante setar a variavel de ambiente MALLOC_CHECK_ para zero (export MALLOC_CHECK_=0) no script de submissao. No Tupa, o modelo soh nao roda com 48 procs, a execucao cai por falha de segmentacao. Este bug ainda esta sendo investigado.
+
+Novos testes deverao ser realizados para validar a migracao. 
+
+
+====================================================================
+11/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Correcao na invocacao a trans_conv_mflx() no Grell 2. Troca do procedimento antigo, pelo novo procedimento do CCATT. Ativacao de trans_conv_mflx() no Grell 3d. 
+
+Arquivos modificados:
+build/bin/depend_model.mk
+build/bin/objects_model.mk
+brams/cuparm/cup_grell3.f90
+
+Obs: foi feita insercao do codigo original de trans_conv_mflx() (CCATT-BRAMS 4.3.3). A versao limpa deste codigo ainda precisa ser validada.
+
+====================================================================
+12/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Insercao da adveccao monotonica, merge dos branches bu-lufla e DMK-CCATT-5.0
+
+Arquivos modificados:
+build/bin/depend_model.mk
+build/bin/objects_model.mk
+build/bin/paths.mk
+src/brams/cuparm/cup_grell3.f90
+src/brams/init/ModNamelistFile.f90
+src/brams/model/rams_master.f90
+src/brams/model/rtimh.f90
+src/brams/radiate/ModUkmoAdapt.f90
+src/brams/radiate/rad_driv.f90
+src/brams/radiate/Rad_UKMO.f90
+src/utils/lib/parlibf.F90
+HISTORICO
+CHEMRAMSIN_Minimo
+
+Arquivos inseridos:
+src/brams/advect
+src/brams/advect/advSendMod.f90
+src/brams/advect/BoundaryMod.f90
+src/brams/advect/errorMod.f90
+src/brams/advect/GridMod.f90
+src/brams/advect/gridteste.f90
+src/brams/advect/InitAdvect.f90
+src/brams/advect/InitAdvect.f90_ant
+src/brams/advect/MapMod.f90
+src/brams/advect/ProcessorMod.f90
+src/brams/init/newComm.f90
+src/brams/model/radvc_mnt.f90
+
+====================================================================
+17/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Reativacao dos arrays extra2d e extra3d com leitura de total de arrays (na_extra2d e na_extra3d) no namelist (CHEMRAMSIN)
+
+Arquivos modificados:
+build/bin/depend_model.mk
+src/brams/model/rams_master.f90
+src/brams/memory/rams_mem_alloc.f90
+src/brams/ccatt/TUV/ModTuvDriver.f90
+src/brams/ccatt/chemistry.f90
+src/brams/ccatt/chem_spack_rodas3_dyndt.f90
+src/brams/model/radvc_mnt.f90
+src/brams/init/rdint.f90
+
+====================================================================
+20/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Correcoes diversas na Adv monotonica. Ativacao do procedimento de atualizacao das bordas e adv. escalares, param. frtr na turbulencia (mxdefm_tracer()).
+
+Arquivos modificados:
+src/brams/model/radvc_mnt.f90
+src/brams/model/radvc.f90
+src/brams/turb/turb_k.f90
+
+
+====================================================================
+21/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Modificacao no RAMSIN_Minimo para rodada do modelo com a Quimica desativada.
+
+Arquivos modificados:
+RAMSIN_Minimo
+
+====================================================================
+26/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Correcao GNU Fortran: Erro na inicializacao dos flags ThereIsCommWith, ThereIsSharedBorder, totalOfMessages, totalOfSends. Inicializacao ocorre antes da alocacao dos arrays.
+
+Obs: modificacao impacta diretamente no resultado.
+
+Arquivos modificados:
+src/brams/init/newComm.f90
+
+
+====================================================================
+26/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Correcao GNU Fortran: variavel isEstudo foi declarada como "INTEGER", mas estava sendo usada como "LOGICAL"
+
+Arquivos modificados:
+src/brams/model/rams_master.f90
+
+====================================================================
+26/09/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Correcao GNU Fortran: erro na desalocacao do array oneIOHeadTable%f, em CreateIOHeadTable(). Obs: problema so ocorre com o compilador GNU Fortran. Merece investigacao. 
+
+Arquivos modificados:
+src/utils/lib/modules/an_header.f90
+
+====================================================================
+11/10/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Testes
+
+1 grade 30x30, 33 niveis, 
+24 h. de simulacao, 
+conveccao desativada, 
+radiacao carma ativada, 
+ccatt ativado
+quimica Rosenbrock 3a ordem (rodas3),
+aerosol e plumerise ativados, 
+mecanismo CB07 + FastTUV 
+
+Supercomputador Tupa:
+- Uso do compilador PGI Fortran e GNU Fortran
+- Com PGI Fortran: O modelo foi executado ate o final tanto com a adveccao Tremback (advmnt=0) como com a adveccao Monotonica (advmnt=1). Os resultados obtidos foram coerentes e compativeis com os resultados produzidos pela versao anterior (CCATT-BRAMS 4.3.3) com uso destas adveccoes. Observou-se pequenas diferencas nos campos dos gases, possivelmente associados as diferencas obtidas nos campos meteorologicos. Estas diferencas foram mais significativas nos testes realizados com a adveccao monotonica do que nos testes realizados com a adveccao Tremback
+- Com GNU Fortran: A execucao do modelo foi interrompida por volta do timestep 400 (saida das 8h.) apresentando o seguinte erro:
+STOP mclat2_fastjx
+ pressure data improperly ordered
+
+Cluster Araguaia:
+- Uso do compilador PGI Fortran e Intel Fortran
+- Com PGI Fortran: execucao bem sucedida com quaisquer adveccoes, resultados coerentes, similares aos resultados ja observados com o uso deste compilador no Tupa
+- Com Intel Fortran: execucao bem sucedida ate o final da simulacao (24h.) e resultados coerentes somente com a adveccao Tremback
+- Ao ativar a adveccao Monotonica, o modelo compilado com Intel Fortran apresentou perda de estabilidade numerica ja na primeira hora. Nota-se que este problema ocorreu tanto na versao 4.3.3 quanto na versao 5.0.   
+
+====================================================================
+09/11/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Insercao da radiacao UKMet e INIT=4
+
+
+Arquivos nao modificados no branch 
+(alterados no trunk, mas ja atualizados no branch do CCATT):
+src/utils/lib/parlibf.F90
+src/brams/advect/ (todos os arquivos do diretorio)
+src/brams/cuparm/cup_grell3.f90
+src/brams/init/ModNamelistFile.f90
+src/brams/model/radvc_mnt.f90
+src/brams/mpi/para_init.f90
+src/brams/mpi/ReadBcst.f90
+src/brams/radiate/ModUkmoAdapt.f90
+src/brams/radiate/Rad_UKMO.f90
+
+Arquivos modificados:
+HISTORICO
+RAMSIN_Minimo
+build/bin/depend_model.mk (removido newComm.f90)
+build/bin/objects_model.mk (removido newComm.f90)
+build/bin/paths.mk (inserida variavel UTILS_DUMP)
+src/brams/fdda/varf_read.f90
+src/brams/fdda/varf_update.f90
+src/brams/init/rdint.f90 (inclusao de advmnt na antiga leitura de namelist, nao acho que seja usado)
+src/brams/io/rams_read_header.f90
+src/brams/io/rname.f90 (inclusao de advmnt para printout, nao acho que seja usado)
+src/brams/model/rams_master.f90
+src/brams/model/rtimh.f90
+src/brams/radiate/mem_radiate.f90
+src/brams/radiate/rad_driv.f90
+
+====================================================================
+12/11/2012: Migracao do CCATT para BRAMS 5.0
+
+Trabalho: Testes
+
+Testcase Light, mecanismo CB07 com FastTUV
+1 grade 30x30, 33 niveis, 
+24 h. de simulacao, 
+conveccao desativada, 
+radiacao carma ativada, 
+ccatt, plumerise, aerosol ativados
+quimica Rosenbrock 3a ordem (rodas3),
+aerosol e plumerise ativados, 
+
+Cluster Araguaia:
+
+Compilador PGI Fortran, adveccao monotonica ativada
+- inicializacao OK
+- reprodutibilidade com a versao 4.3.3
+
+Compilador PGI Fortran, adveccao monotonica desativada
+- inicializacao OK
+- reprodutibilidade com a versao 4.3.3
+
+Compilador Intel Fortran, adveccao monotonica ativada
+- inicializacao OK
+- perda de estabilidade numerica 
+
+Compilador Intel Fortran, adveccao monotonica desativada
+- inicializacao OK
+- reprodutibilidade com a versao 4.3.3
+
+====================================================================
+15/Out/2012 - A pedido do Dr. Saulo freitas:
+              "Prezado Demerval,
+               Durante a visita recente do Dr. Grell no CPTEC na semana passada, descobrimos um erro nos c?igos de param de cumulus rasos e profundos.
+               Assim, venho requisitar a corre?o destes atrav? da substitui?o dos seguintes c?igos fontes:
+               /stornext/home/saulo.freitas/para-demerval/cuparm.tar
+
+               Estarei gerando a versao SVN para envio. Se poss?el, seria adequado rodar novamente come?ndo de 1/10/2012
+               Obrigado e fico a disposi?o para qq quest?."
+               
+               Foram atualizados os fontes: cup_grell3.f90, cup_grell_catt_shallow.f90 e module_cu_g3.f90 e
+               executado o modelo com este novo fonte desde o dia 01/Out/2012.
+     Implementado por:  Demerval
+               
+====================================================================
+02/Jan/2013 - A pedido do Dr. Saulo freitas este modelo passa a rodar na pre-operacao, substituindo o BRAMS05 que utilizava o LEAF.
+     Implementado por:  Demerval
+
+====================================================================
+22/Jan/2013 - Inclusao do JULES nesta versao
+     Implementado por:  Demerval
+
+====================================================================
+22/Jan/2013 - Nos fontes do DinamicaCCATT ainda n? havia sido inclu?as as modifica?es do
+              Saulo desenvolvida no dia 03/Jan/2013, s? elas:
+              A pedido do Dr. Saulo freitas:
+              Ola Demerval,
+              Por favor, atualize seu c?igo com as rotinas anexas. Voce deve modificar o depend_model.mk e object_model.mk na forma abaixo:
+
+              1)incluir no  build/bin/depend_model.mk
+                cup_grell3.o : $(CUPARM)/cup_grell3.f90  Phys_const.o \
+                        extra.o io_params.o mem_basic.o mem_cuparm.o mem_grell.o \
+                        mem_grell_param2.o mem_grid.o mem_leaf.o mem_micro.o \
+                        mem_scalar.o mem_scratch.o mem_scratch1_grell.o mem_tconv.o \
+                        mem_tend.o mem_turb.o micphys.o node_mod.o rconstants.o module_cu_g3.o \
+                        module_cu_gd_fim.o var_tables.o mpass_g3d.o mem_carma.o module_cu_gf.o
+                        cp -f $< $(<F:.f90=.f90)
+                        $(F_COMMAND) $(<F:.f90=.f90)
+                        rm -f $(<F:.f90=.f90)
+               module_cu_gf.o : $(CUPARM)/module_cu_gf.f90
+                       cp -f $< $(<F:.f90=.f90)
+                       $(F_COMMAND) $(<F:.f90=.f90)
+                       rm -f $(<F:.f90=.f90)
+              -----------------------
+              2) incluir no build/bin/objects_model.mk a linha abaixo:
+                      module_cu_gf.o \
+              -----------------------
+              Aten?o : defina o NNQPARM como "5" e o DIFF "7"
+
+      As previs?es ser? re-executadas desde o dia 01/Jan/2013
+
+     Implementado por:  Demerval
+
+==========================================================================
+29/Set/2021
+
+Using the RRTMG 5.0 for Short and Long Wave radiation
+* Using Jules 6.0 for surface
+* Plumerise with OpenMP capacity - Thread safe
+* Snall bugs fixed
+
+
+
