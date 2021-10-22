@@ -20,7 +20,7 @@ module modPrintInitial
    !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
    !# @endwarning
    !#
-    
+
    !Use area
    use dump !Dump contains a lot of functions for debugs and formated printouts
 
@@ -31,7 +31,7 @@ module modPrintInitial
    character(len=*),parameter :: procedureName='**modPrintInitial**' !Name of this procedure
 
    !Parameters
-   !0- leapfrog Robert-Asselin filter, 
+   !0- leapfrog Robert-Asselin filter,
    !1- leapfrog Robert-Asselin_Williams filter
    !2- Runge-Kutta 3rd order
    !3- Adams-Bashforth-Moulton 3rd order
@@ -48,7 +48,7 @@ module modPrintInitial
                                             ,'hybrid: forward 2nd order for thetail,microphysics, TKE'/)
 
    !0-none, 2-Mahrer/Pielke, 1-Chen, 3-Harrington
-              !    4- CARMA 
+              !    4- CARMA
    character(len=*), parameter ,dimension(6):: c_RadTYP=(/ 'off          ' &
                                              ,'Mahrer/Pielke' &
                                              ,'Che-Cotton   ' &
@@ -99,10 +99,10 @@ module modPrintInitial
       module procedure convString2String
    end interface
 
-   type csv 
+   type csv
       !2, 'PODA', 'Partial Oxigen Density in the air index', 'g/m^3'
-      integer :: nd 
-      character(len=32) :: vname 
+      integer :: nd
+      character(len=32) :: vname
       character(len=60) :: varDescription
       character(len=32) :: unit
    end type csv
@@ -143,15 +143,15 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
       !Use area
-   
+
       implicit none
 
       character(len=*),parameter :: procedureName='**bramsHeader**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
       integer, intent(in) :: nMachs,mchnum,master_num
       integer, intent(in) :: year,month,day,hour,ngrids
@@ -159,11 +159,11 @@ module modPrintInitial
       character(len=*), intent(in) :: version,license,runtype,namelist
       real, intent(in) :: timmax
       character(len=*), intent(in) :: timeunit
-   
+
       !Local variables
       character(len=12) :: c0
       integer :: son
-   
+
       !Code
           ! master prints initial banner and dumps namelist at stdio
     if (mchnum==master_num) then
@@ -211,16 +211,16 @@ module modPrintInitial
                           //c_lightYellow//trim(namelist)//c_noColor
       write(*,"(a,I1,a)") "                    ******   Parallel execution using "//c_lightYellow//trim(adjustl(c0))//c_noColor//" processes and " &
                          //c_lightYellow,ngrids,c_noColor//' grids *****'
-      write(*,"(a)") "+----------------------------------------------------------------------------------------------------------------------------+"   
+      write(*,"(a)") "+----------------------------------------------------------------------------------------------------------------------------+"
       write(*,"(a)") "| "//c_lightYellow//"   More information about submission(non fatal errors, notices, warnings), please, see the file brams.log" &
                       //" and jules.log"//c_noColor//"    |"
       write(*,"(a)") "+----------------------------------------------------------------------------------------------------------------------------+"
 
    endif
-   
+
       bramsHeader=0
 
-   end function bramsHeader 
+   end function bramsHeader
 
    !=============================================================================================
    integer function csvHeader(csvFile)
@@ -244,14 +244,14 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
       character(len=*),parameter :: procedureName='**csvHeader**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
-      character(len=*), intent(in) :: csvFile   
-   
+      character(len=*), intent(in) :: csvFile
+
       !Local variables
       integer :: i,err,varfileUnit,nvar
       type(csv) :: postVar
@@ -279,8 +279,8 @@ module modPrintInitial
       write(*,fmt='(A)') "+--------------+--+"//repeat("-",60)//"+"//repeat("-",20)//"+"
 
       csvHeader=0
-   
-   end function csvHeader 
+
+   end function csvHeader
 
    !=============================================================================================
    integer function csvTail()
@@ -304,20 +304,14 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
       character(len=*),parameter :: procedureName='**csvTail**' !Name of this procedure
-      !
-      !Local Parameters
-   
-      !Input/Output variables
-   
-      !Local variables
-   
+      
       !Code
       write(*,fmt='(A)') "+--------------+--+"//repeat("-",60)//"+"//repeat("-",20)//"+"
 
       csvTail=0
-   
+
    end function csvTail
 
    !=============================================================================================
@@ -342,13 +336,13 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
       character(len=*),parameter :: procedureName='**printOnecsv**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
-      character(len=*), intent(in) :: varName 
+      character(len=*), intent(in) :: varName
 
       !Local variables
       type(csv) :: one_post_variable
@@ -356,7 +350,7 @@ module modPrintInitial
       character(len=14) :: varNameUpper
 
       !Code
-      if(lastIsBold) then 
+      if(lastIsBold) then
           write(*,fmt='(A)',advance='no') c_noColor
           lastIsBold=.false.
      else
@@ -378,8 +372,8 @@ module modPrintInitial
       write(*,fmt='(A)') c_noColor
       printOnecsv=0
 
-   
-   end function printOnecsv 
+
+   end function printOnecsv
 
    function getCsvVarible(varName) result(one_post_variable)
       character(len = *), intent(in) :: varName
@@ -445,23 +439,23 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
       character(len=*),parameter :: procedureName='**printFileHeader**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
-   
+
       !Local variables
-   
+
       !Code
       write(*,fmt='(A)') "+--------------+---+"//repeat("-",50)//"+"//repeat("-",50)//"+"
       write(*,fmt='("|",A14,"|",A3,"|",A50,"|",A50,"|")') 'Variable','I/O','Folder','File or Prefix'
       write(*,fmt='(A)') "+--------------+---+"//repeat("-",50)//"+"//repeat("-",50)//"+"
 
       printFileHeader=0
-   
-   end function printFileHeader 
+
+   end function printFileHeader
 
 
    !=============================================================================================
@@ -486,20 +480,20 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
       character(len=*),parameter :: procedureName='**printFileTail**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
-   
+
       !Local variables
-   
+
       !Code
       write(*,fmt='(A)') "+--------------+---+"//repeat("-",50)//"+"//repeat("-",50)//"+"
 
       printFileTail=0
-   
+
    end function printFileTail
 
    !=============================================================================================
@@ -524,22 +518,22 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
 
       character(len=*),parameter :: procedureName='**printOneFile**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
       character(len=*), intent(in) :: varNam,compositFileName,io
-   
+
       !Local variables
       character(len=50) :: fnames(2)
       character(len=14) :: vname
       integer :: lvn
       character(len=3) :: cio
       logical :: dir_exist
-  
+
      !Code
      lvn=len(trim(io))
      if(lvn==1) then
@@ -558,9 +552,9 @@ module modPrintInitial
 
 
      fnames=getFolder(compositFileName)
-     inquire(file=trim(fnames(1))//'/.', exist=dir_exist)   
+     inquire(file=trim(fnames(1))//'/.', exist=dir_exist)
       if(dir_exist) then
-         if(lastIsBold) then 
+         if(lastIsBold) then
             write(*,fmt='(A)',advance='no') c_noColor
             lastIsBold=.false.
          else
@@ -568,20 +562,20 @@ module modPrintInitial
             lastIsBold=.True.
          endif
      else
-         if(lastIsBold) then 
+         if(lastIsBold) then
             write(*,fmt='(A)',advance='no') c_noColor//c_blink
             lastIsBold=.false.
          else
             write(*,fmt='(A)',advance='no') c_inverted//c_blink
             lastIsBold=.True.
          endif
-     endif         
+     endif
 
      write(*,fmt='("|",A14,"|",A3,"|",A50,"|",A50,"|")',advance='no') vname,cio,fnames(1),fnames(2)
-     
+
      printOneFile=0
      write(*,fmt='(A)') c_noColor
-   end function printOneFile 
+   end function printOneFile
 
    !=============================================================================================
    function getFolder(compositName) result(fnames)
@@ -605,26 +599,26 @@ module modPrintInitial
       !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
       !# @endwarning
       !#
-       
+
 
       character(len=*),parameter :: procedureName='**getFolder**' !Name of this procedure
       !
       !Local Parameters
-   
+
       !Input/Output variables
       character(len=*), intent(in) :: compositName
-   
+
       !Local variables
       integer :: slashPos
       character(len=50) :: fnames(2)
-   
+
       !Code
       slashPos=index(compositName,'/',BACK=.true.)
       fnames(1)=compositName(1:slashPos)
       fnames(2)=compositName(slashPos+1:)
 
-   
-   end function getFolder 
+
+   end function getFolder
 
 
 
@@ -650,22 +644,22 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**printVarHeader**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: nvars
-  
+
      !Local variables
      integer :: i
      character(len=29) :: gName(nvars)
      character(len=1) :: cn
 
- 
+
      !Code
      write(cn,fmt='(I1)') nvars
 
@@ -677,8 +671,8 @@ module modPrintInitial
      write(*,fmt='(A)') '+'//repeat('--------------:--------------+',nvars)
 
      printVarHeader=0
-  
-  end function printVarHeader 
+
+  end function printVarHeader
 
   !=============================================================================================
   integer function printVarTAil(nvars)
@@ -702,27 +696,27 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**printVarTail**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: nvars
-  
+
      !Local variables
      character(len=1) :: cn
 
- 
+
      !Code
      write(cn,fmt='(I1)') nvars
 
      write(*,fmt='(A)') '+'//repeat('--------------:--------------+',nvars)
 
      printVarTail=0
-  
+
   end function printVarTail
 
 
@@ -750,22 +744,22 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**printGridHeader**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: ngrids
-  
+
      !Local variables
      integer :: i
      character(len=14) :: gName(ngrids)
      character(len=1) :: cn
 
- 
+
      !Code
      write(cn,fmt='(I1)') ngrids
 
@@ -777,8 +771,8 @@ module modPrintInitial
      write(*,fmt='(A)') '+'//repeat('--------------+',ngrids+1)
 
      printGridHeader=0
-  
-  end function printGridHeader 
+
+  end function printGridHeader
 
     !=============================================================================================
   integer function printGridTail(ngrids)
@@ -802,24 +796,24 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**printGridTail**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: ngrids
-  
+
      !Local variables
-  
+
      !Code
      write(*,fmt='(A)') '+'//repeat('--------------+',ngrids+1)
 
      printGridTail=0
-  
-  end function printGridTail 
+
+  end function printGridTail
 
 
   !=============================================================================================
@@ -844,26 +838,26 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**convReal2String**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      real, intent(in) :: value
      character(len=*),intent(in) :: format
-  
+
      !Local variables
      character(len=14) :: cvar
-  
+
      !Code
      write(cvar,fmt='('//format//')') value
 
      convReal2String=cvar
-  
-  end function convReal2String 
+
+  end function convReal2String
 
   !=============================================================================================
   character(len=14) function convInt2String(value,format)
@@ -887,26 +881,26 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**convReal2String**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: value
      character(len=*),intent(in) :: format
-  
+
      !Local variables
      character(len=14) :: cvar
-  
+
      !Code
      write(cvar,fmt='('//format//')') value
 
      convInt2String=cvar
-  
-  end function convInt2String 
+
+  end function convInt2String
 
   !=========================================================================
   character(len=14) function convLogical2String(value,format)
@@ -930,28 +924,28 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**convReal2String**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      logical, intent(in) :: value
      character(len=*),intent(in) :: format
-  
+
      !Local variables
      character(len=14) :: cvar
      character(len=14) :: varl
-  
+
      !Code
      cvar='     FALSE    '
      if(value) cvar='     TRUE     '
 
      convLogical2String=cvar
-  
-  end function convLogical2String 
+
+  end function convLogical2String
 
 !=========================================================================
   character(len=14) function convString2String(value,format)
@@ -975,21 +969,21 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      !Use area
 
      character(len=*),parameter :: procedureName='**convString2String**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      character(len=*), intent(in) :: value
      character(len=*),intent(in) :: format
-  
+
      !Local variables
      character(len=14) :: vname
      integer :: lvn
-  
+
      !Code
      lvn=len(trim(value))
      if(lvn<14) then
@@ -999,8 +993,8 @@ module modPrintInitial
      endif
 
      convString2String=vname
-  
-  end function convString2String 
+
+  end function convString2String
 
 
   !=============================================================================================
@@ -1025,22 +1019,22 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      character(len=*),parameter :: procedureName='**printOneLineVars**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: nvars
      character(len=*), intent(in) :: varNam(nvars),varVal(nvars)
-  
+
      !Local variables
      integer :: n
 
 
-  
+
      !Code
-     if(lastIsBold) then 
+     if(lastIsBold) then
           write(*,fmt='(A)',advance='no') c_noColor
           lastIsBold=.false.
      else
@@ -1050,12 +1044,12 @@ module modPrintInitial
      write(*,fmt='("|")',advance="no")
      do n=1,nvars
          write(*,fmt='(A14,":",A14,"|")',advance="no")  varNam(n),varVal(n)
-     enddo 
+     enddo
      write(*,fmt='(A)') c_noColor
 
      printOneLineVars=0
-  
-  end function printOneLineVars 
+
+  end function printOneLineVars
 
 
   !=============================================================================================
@@ -1080,26 +1074,26 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      character(len=*),parameter :: procedureName='**printOneVarGridReal**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: ngrids
      real, intent(in) :: var(ngrids)
      character(len=*),intent(in) :: varname
      character(len=*), intent(in) :: fmt
-  
+
      !Local variables
      character(len=14) :: vname
      integer :: lvn
      character(len=5) :: pc
      character(len=1) :: cn
-  
+
      !Code
      write(cn,fmt='(I1)') ngrids
-      if(lastIsBold) then 
+      if(lastIsBold) then
           write(*,fmt='(A)',advance='no') c_noColor
           lastIsBold=.false.
       else
@@ -1120,7 +1114,7 @@ module modPrintInitial
      endif
      printOneVarGridReal=0
      write(*,fmt='(A)') c_noColor
-  
+
   end function printOneVarGridReal
 
     !=============================================================================================
@@ -1145,25 +1139,25 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      character(len=*),parameter :: procedureName='**printOneVarGridInt**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: ngrids
      Integer, intent(in) :: var(ngrids)
      character(len=*),intent(in) :: varname
      character(len=*), intent(in) :: fmt
-  
+
      !Local variables
      character(len=14) :: vname
      integer :: lvn
      character(len=1) :: cn
-  
+
      !Code
       write(cn,fmt='(I1)') ngrids
-      if(lastIsBold) then 
+      if(lastIsBold) then
           write(*,fmt='(A)',advance='no') c_noColor
           lastIsBold=.false.
       else
@@ -1183,7 +1177,7 @@ module modPrintInitial
      endif
      printOneVarGridInt=0
      write(*,fmt='(A)') c_noColor
-  
+
   end function printOneVarGridInt
 
     !=============================================================================================
@@ -1208,16 +1202,16 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      character(len=*),parameter :: procedureName='**printOneVarGridLogical**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: ngrids
      logical, intent(in) :: var(ngrids)
      character(len=*),intent(in) :: varname
-  
+
      !Local variables
      character(len=14) :: vname
      integer :: lvn,i
@@ -1226,7 +1220,7 @@ module modPrintInitial
 
      !Code
       write(cn,fmt='(I1)') ngrids
-      if(lastIsBold) then 
+      if(lastIsBold) then
           write(*,fmt='(A)',advance='no') c_noColor
           lastIsBold=.false.
       else
@@ -1247,7 +1241,7 @@ module modPrintInitial
 
      printOneVarGridLogical=0
      write(*,fmt='(A)') c_noColor
-  
+
   end function printOneVarGridLogical
 
     !=============================================================================================
@@ -1272,24 +1266,24 @@ module modPrintInitial
      !# &copy; <https://creativecommons.org/licenses/by-sa/4.0/>
      !# @endwarning
      !#
-      
+
      character(len=*),parameter :: procedureName='**printOneVarGridChar**' !Name of this procedure
      !
      !Local Parameters
-  
+
      !Input/Output variables
      integer, intent(in) :: ngrids
      character(len=*), intent(in) :: var(ngrids)
      character(len=*),intent(in) :: varname
-  
+
      !Local variables
      character(len=14) :: vname
      integer :: lvn
      character(len=1) :: cn
-  
+
      !Code
      write(cn,fmt='(I1)') ngrids
-      if(lastIsBold) then 
+      if(lastIsBold) then
           write(*,fmt='(A)',advance='no') c_noColor
           lastIsBold=.false.
       else
@@ -1306,8 +1300,8 @@ module modPrintInitial
 
      printOneVarGridChar=0
      write(*,fmt='(A)') c_noColor
-  
+
   end function printOneVarGridChar
 
 
-  end module modPrintInitial 
+  end module modPrintInitial
